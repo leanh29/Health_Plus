@@ -9,8 +9,6 @@ def get_measure_list():
     measures_list = measures
     return measures_list
 
-
-
 def get_measure(pk):
     url = 'http://127.0.0.1:8000/api/measure/'+str(pk) 
     #params = {'year': year, 'author': author}

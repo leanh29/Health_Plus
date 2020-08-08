@@ -6,6 +6,12 @@ from .forms import MeasureCreationForm, MeasureUpdateForm
 from django.views.decorators.csrf import csrf_exempt
 import requests
 
+def home(request):
+#     context = {
+#         'posts': Post.objects.all()
+#     }
+    return render(request,'home.html')
+
 class GetMeasureList(TemplateView):
     template_name = 'measure_list.html'
     def get_context_data(self, *args, **kwargs):
