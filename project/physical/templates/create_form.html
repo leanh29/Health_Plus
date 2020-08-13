@@ -1,0 +1,53 @@
+{% extends "base_physical.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> New Physical </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Physical</a></li>
+            <li class="breadcrumb-item active" aria-current="page">New Physical</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form class="forms-sample" action="/physical/create/" method="POST">
+
+                <!-- {% csrf_token %}
+                {{ form|crispy }} -->
+
+                <div id="div_id_height" class="form-group row"> 
+                    <label for="id_height" class=" requiredField col-sm-3 col-form-label">Height<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="number" name="height" min="0" max="200" value="" step="any" class="numberinput form-control" required id="id_height" placeholder="centimet"> </div>
+                </div>
+                <div id="div_id_weight" class="form-group row"> 
+                    <label for="id_weight" class=" requiredField col-sm-3 col-form-label">Weight<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="number" name="weight" value="" step="any" class="numberinput form-control" required id="id_weight" placeholder="kilogram"> </div>
+                </div>
+                <div id="div_id_date" class="form-group row"> 
+                    <label for="id_date" class=" requiredField col-sm-3 col-form-label">Date<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="date" name="date" value="" class="datetimeinput form-control" required id="id_date">
+                        <input type="hidden" name="initial-date" value="" id="initial-id_date"> 
+                    </div>
+                </div>
+                <input value="{{ user }}" style="display: none;" id="id_user" name="user" required id="id_user">
+                <div class="row" style="justify-content: center">
+                    <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>
+                    <a href="{% url 'physical_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>
+                    <!-- <button class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</button> -->
+                </div>
+                <!-- <button type="submit" class="btn btn-inverse-success btn-fw col-md-6">Save</button>
+                <button class="btn btn-inverse-secondary btn-fw col-md-6">Cancel</button> -->
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

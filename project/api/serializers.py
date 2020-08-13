@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from Measure.models import Measure
 from physical.models import PhysicalModel
+from user.models import User
 
 class MeasureSerializers(serializers.ModelSerializer):
     class Meta:
@@ -10,15 +11,15 @@ class MeasureSerializers(serializers.ModelSerializer):
 class PhysicalSerializers(serializers.ModelSerializer):
     class Meta:
         model = PhysicalModel
-        fields = ['height','weight']
+        fields = ['id','height','weight','date','user']
 
-    # def create(self, validated_data):
-    #     return PhysicalModel.objects.create(**validated_data)
-    
-    # def update(self, instance, validated_data):
-    #     instance.height = validated_data.get('height', instance.height)
-    #     instance.weight = validated_data.get('weight', instance.weight)
-    #     return instance
+class UserSerializers(serializers.ModelSerializer):
+    user_physical = PhysicalSerializers(many = True)
+    class Meta:
+        model = User
+
+
+
 
 
         

@@ -1,40 +1,15 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.contrib import messages
 import requests
-from .forms import PostPhysical
+from .forms import PostPhysical, PutPhysical
 from .serializer import PhysicalSerializer
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, DetailView
 
-def save_physical(request):
-
-    if request.method == "POST":
-        form = PostPhysical(request.POST)
-        if form.is_valid():
-            height = form.cleaned_data['height']
-            weight = form.cleaned_data['weight']
-            #r = requests.get('http://127.0.0.1:8000/api/physical/ + '&height=' + height' + '&weight=' + weight)
-            r = requests.post('http://127.0.0.1:8000/api/physical/', data = {'height':height, 'weight':weight})
-            if r.status_code == 200:
-                data = r.json()
-                print(data)
-            # json = '''{
-            #                 "height":1.44444444,
-            #                 "weight":2.24444444442
-            #             }'''
-            # # height = r.json()('height')
-            # # weight = r.json()('weight')
-            # a = r.json()
-            # # hieucao = request.POST.get('height')
-            # # cannang = request.POST.get('weight')
-            # print(height, weight)
-            return redirect('physical_list')
-    else:
-        form = PostPhysical()
-
-    return render(request, 'form.html',{'form':form})
-
+#CALL API GET LIST
 class GetPhysicalList(TemplateView):
-    template_name = 'physical.html'
+    template_name = 'list_physical.html'
     def get_context_data(self, *args, **kwargs):
         context = {
             'physical' : get_physical_list(),
@@ -43,11 +18,90 @@ class GetPhysicalList(TemplateView):
 
 def get_physical_list():
     url = 'http://127.0.0.1:8000/api/physical/'
-    #params = {'year': year, 'author': author}
     r = requests.get(url)
     physical = r.json()
     physical_list = physical
-    #measures_list = measures
-    # for i in range(len(measures)):
-    #     measures_list.append(measures[i])
     return physical_list
+
+# CALL API POST
+@csrf_exempt
+def save_physical(request):
+    if request.method == "POST":
+        form = PostPhysical(request.POST)
+        if form.is_valid():
+            height = form.cleaned_data['height']
+            weight = form.cleaned_data['weight']
+            date = form.cleaned_data['date']
+            user = form.cleaned_data['user']
+            r = requests.put('http://127.0.0.1:8000/api/physical/', data = {'height':height, 'weight':weight, 'date':date, 'user':user.id})
+            if r.status_code == 200:
+                data = r.json()
+                print(data)
+                return redirect('physical_list')
+    else:
+        form = PostPhysical()
+
+    return render(request, 'create_form.html',{'form':form})
+
+#CALL API GET DETAIL
+class GetPhysicalDetail(TemplateView):
+    template_name = 'detail_physical.html'
+    def get_context_data(self, id, *args, **kwargs):
+        context = {
+            'physical' : get_physical_detail(id),
+            'abc': PostPhysical()
+        }
+        return context
+
+def get_physical_detail(id):
+    url = 'http://127.0.0.1:8000/api/physical/'+str(id)
+    r = requests.get(url)
+    physical = r.json()
+    print(physical)
+    return physical
+
+#CALL API PUT
+@csrf_exempt
+def update_physical(request, id):
+    if request.method == "POST":
+        form = PutPhysical(request.POST)
+        #form = PutPhysical(request.POST,instance=request.physical)
+        if True:#form.is_valid():
+            #print(form.cleaned_data['height'])
+            height = request.POST['height']
+            weight = request.POST['weight']
+            date = request.POST['date']
+            user = request.POST['user']
+            print(height)
+            print(weight)
+            print(user)
+            print('http://127.0.0.1:8000/api/physical/{}/'.format(id))
+            r = requests.put('http://127.0.0.1:8000/api/physical/{}/'.format(id), data = {'height':height, 'weight':weight, 'date':date, 'user':user})
+            if r.status_code == 200:
+                data = r.json()
+                print(data)
+    # else:
+    #     form = PutPhysical(instance=request.physical)
+    return render(request, 'update_physical.html', {'form':form})
+    #return redirect('physical_list')
+
+#CALL API DELETE
+@csrf_exempt
+def delete_physical(request, id):
+    print('http://127.0.0.1:8000/api/physical/{}/'.format(id))
+    r = requests.delete('http://127.0.0.1:8000/api/physical/{}/'.format(id))
+    if r.status_code == 200:
+        messages.success(request, f'Delete successfully')
+        data = r.json()
+        print(data)
+    return redirect('physical_list')
+    #return render(request, 'list_physical.html')
+    
+    
+
+        
+
+
+        
+        
+

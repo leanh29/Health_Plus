@@ -22,6 +22,11 @@ class DeatailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Measure.objects.all()
     serializer_class = MeasureSerializers
 
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        #send_email_confirmation(user=self.request.user, modified=instance)
+
+# API FOR PHYSICAL
 class PhysicalList(generics.ListCreateAPIView):
     queryset = PhysicalModel.objects.all()
     serializer_class = PhysicalSerializers
@@ -29,41 +34,12 @@ class PhysicalList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save()
 
-#@api_view(['GET', 'POST'])
-# def PhysicalList(   ):
-#     if request.method == 'GET':
-#         physicals = PhysicalModel.objects.all()
-#         serializer = PhysicalSerializers(physicals, many = True)
-#         return Response(serializer.data)
+class PhysicalDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PhysicalModel.objects.all()
+    serializer_class = PhysicalSerializers
 
-#     elif request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         #print(JSONParser().parse(request)+"-----------------")
-#         serializer = PhysicalSerializers(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status = status.HTTP_201_CREATE)
-#         return JsonResponse(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    def perform_update(self, serializer):
+        instance = serializer.save()
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def PhysicalDetail(request, pk):
-    try:
-        physical = PhysicalModel.objects.get(pk=pk)
-    except PhysicalModel.DoesNotExist:
-        return HttpResponse(status = status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
-        serializer = PhysicalSerializers(physical)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = PhysicalSerializers(physical, data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-    
-    elif request.method == 'DELETE':
-        physical.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 

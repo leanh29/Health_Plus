@@ -4,3 +4,4 @@ from .models import PhysicalModel
 class PhysicalSerializer(serializers.ModelSerializer):
     class Meta:
         model = PhysicalModel
+        
