@@ -62,8 +62,8 @@ def create_measure(request):
         form = MeasureCreationForm()
     return render(request, 'create.html', {'form':form})
 
-def get_measure(pk):
-    url = 'http://127.0.0.1:8000/api/measure/'+str(pk) 
+def get_measure(id):
+    url = 'http://127.0.0.1:8000/api/measure/'+str(id) 
     #params = {'year': year, 'author': author}
     r = requests.get(url)
     measures = r.json()

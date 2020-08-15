@@ -1,5 +1,4 @@
 import datetime
-from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -16,4 +15,4 @@ class PhysicalModel(models.Model):
         return f'{self.user.username} Physical'
     
     def get_absolute_url(self):
-        return reverse('physical_delete',kwargs={'id':self.id})
+        return reverse('physical_detail',kwargs={'id':self.id})

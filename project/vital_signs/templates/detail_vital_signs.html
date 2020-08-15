@@ -1,0 +1,62 @@
+{% extends "base_physical.html" %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> Update Physical </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Physical</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Physical</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url 'vital_signs_update' id=vital_signs.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="div_id_temperature" class="form-group row"> 
+                    <label for="id_temperature" class=" requiredField col-sm-3 col-form-label">Temperature<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="number" value="{{vital_signs.temperature}}" name="temperature" min="0" max="50" value="" step="any" class="numberinput form-control" required id="id_temperature" placeholder="°C"> </div>
+                </div>
+                <div id="div_id_bool_pressure" class="form-group row"> 
+                    <label for="id_bool_pressure" class=" requiredField col-sm-3 col-form-label">Bool Pressure<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="number" value="{{vital_signs.bool_pressure}}" name="bool_pressure" value="" class="numberinput form-control" required id="id_bool_pressure" placeholder="mmHg"> </div>
+                </div>
+                <div id="div_id_heartbeat" class="form-group row"> 
+                    <label for="id_heartbeat" class=" requiredField col-sm-3 col-form-label">Heartbeat<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="number" value="{{vital_signs.heartbeat}}" name="heartbeat" value="" class="numberinput form-control" required id="id_heartbeat" placeholder="bpm"> </div>
+                </div>
+                <div id="div_id_breathing" class="form-group row"> 
+                    <label for="id_breathing" class=" requiredField col-sm-3 col-form-label">Breathing<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="number" value="{{vital_signs.breathing}}" name="breathing" value="" class="numberinput form-control" required id="id_heartbeat" placeholder="bpm"> </div>
+                </div>
+                <div style="display: none;" id="div_id_user" class="form-group"> 
+                    <label for="id_user" class=" requiredField">User<span class="asteriskField">*</span> </label> 
+                    <div class=""> 
+                        <select name="user" class="select form-control" required id="id_user" value={{user}}> 
+                            <option value="{{user.id}}" selected>{{user}}</option> 
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="justify-content: center">
+                    <button type="submit" class="btn btn-inverse-warning btn-fw col-md-4"
+                        style="margin: 0px 20px;">Update</button>
+                    <a href="{% url 'physical_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4"
+                        style="margin: 0px 20px;">Cancel</a>
+                    <!-- <button class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</button> -->
+                </div>
+
+                <!-- <button type="submit" class="btn btn-inverse-warning btn-fw col-md-12">Update</button> -->
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+{% endblock content %}

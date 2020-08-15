@@ -16,19 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
-from physical import urls as urls_physical
 from django.conf.urls.static import static
+from django.conf import settings
+
 from api import urls as urls_api
 from user import urls as urls_user
 from Measure import urls as urls_measure
-from django.conf import settings
+from physical import urls as urls_physical
+from vital_signs import urls as urls_vital_signs
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include(urls_user)),
     path('api/', include(urls_api)),
     path('measure/', include(urls_measure)),
-    path('physical/', include(urls_physical))
+    path('physical/', include(urls_physical)),
+    path('vital-signs/', include(urls_vital_signs))
 ]
 
 if settings.DEBUG:

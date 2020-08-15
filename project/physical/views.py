@@ -1,5 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 from django.contrib import messages
 import requests
@@ -33,11 +33,18 @@ def save_physical(request):
             weight = form.cleaned_data['weight']
             date = form.cleaned_data['date']
             user = form.cleaned_data['user']
-            r = requests.put('http://127.0.0.1:8000/api/physical/', data = {'height':height, 'weight':weight, 'date':date, 'user':user.id})
-            if r.status_code == 200:
+            r = requests.post('http://127.0.0.1:8000/api/physical/', data = {'height':height, 'weight':weight, 'date':date, 'user':user.id})
+            if r.status_code == 200 or 201:
                 data = r.json()
                 print(data)
                 return redirect('physical_list')
+            else:
+                msg = r.json()
+                return HttpResponse(msg)
+        else:
+        # Added else statment
+            msg = 'Errors: %s' % form.errors.as_text()
+            return HttpResponse(msg, status=400)
     else:
         form = PostPhysical()
 
