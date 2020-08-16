@@ -33,10 +33,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
-    'Measure',
     'physical.apps.PhysicalConfig',
     'user.apps.UserConfig',
     'vital_signs.apps.VitalSignsConfig',
+    'hospital_record.apps.HospitalRecordConfig',
     'crispy_forms',
     'widget_tweaks',
     'django.contrib.admin',

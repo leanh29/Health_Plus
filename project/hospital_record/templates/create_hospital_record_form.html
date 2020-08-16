@@ -1,0 +1,47 @@
+{% extends "base_physical.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> New Hospital Record </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Hospital Record</a></li>
+            <li class="breadcrumb-item active" aria-current="page">New Hospital Record</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form class="forms-sample" action="/hospital-record/create/" method="POST">
+                {% csrf_token %}
+                <!-- {{v_form|crispy}} -->
+                <div id="div_id_hospital" class="form-group row"> 
+                    <label for="id_hospital" class=" requiredField col-sm-3 col-form-label">Hospital<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="hospital" value="" class="numberinput form-control" required id="id_hospital" placeholder=""> </div>
+                </div>
+                <div style="display: none;" id="div_id_user" class="form-group"> 
+                    <label for="id_user" class=" requiredField">User<span class="asteriskField">*</span> </label> 
+                    <div class=""> 
+                        <select name="user" class="select form-control" required id="id_user" value={{user}}> 
+                            <option value="{{user.id}}" selected>{{user}}</option> 
+                        </select>
+                    </div>
+                </div>
+                <!-- <input value="{{ user }}" style="display: none;" id="id_user" name="user" required id="id_user"> -->
+                <div class="row" style="justify-content: center">
+                    <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>
+                    <a href="{% url 'vital_signs_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>
+                    <!-- <button class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</button> -->
+                </div>
+                <!-- <button type="submit" class="btn btn-inverse-success btn-fw col-md-6">Save</button>
+                <button class="btn btn-inverse-secondary btn-fw col-md-6">Cancel</button> -->
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

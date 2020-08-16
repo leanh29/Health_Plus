@@ -1,12 +1,12 @@
-{% extends "base_vital_signs.html" %}
+{% extends "base_hospital_record.html" %}
 {% load static %}
 {% block page-header %}
 <div class="page-header">
-    <h3 class="page-title"> Vital Signs List </h3>
+    <h3 class="page-title"> Hospital Record List </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Vital Signs</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Vital Signs List</li>
+            <li class="breadcrumb-item"><a href="#">Hospital Record</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Hospital Record List</li>
         </ol>
     </nav>
 </div>
@@ -19,7 +19,7 @@
         </div>
       {% endfor %}
     {% endif %} -->
-    <a href="{% url 'create_vital_signs' %}" class="btn btn-inverse-success btn-fw" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Vital Signs</a>
+    <a href="{% url 'create_hospital_record' %}" class="btn btn-inverse-success btn-fw" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Hospital Record</a>
     <!-- <button type="button" class="btn btn-inverse-success btn-fw">New physical</button> -->
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
@@ -27,24 +27,16 @@
         <table class="table table-striped ">
           <thead>
             <tr>
-              <th> Time </th>
-              <th> Temperature (°C) </th>
-              <th> Bool Pressure (mmHg) </th>
-              <th> Heartbeat (bpm) </th>
-              <th> Breathing (per minute)</th>
+              <th> Hospital </th>
               <th>  </th>
               <th>  </th>
             </tr>
           </thead>
           <tbody>
-                {% for vs in vital_signs  %}
+                {% for hr in hospital_record  %}
                 <tr>
-                    <td> {{ vs.time }} </td>
-                    <td> {{ vs.temperature }} </td>
-                    <td> {{ vs.bool_pressure }} </td>
-                    <td> {{ vs.heartbeat }} </td>
-                    <td> {{ vs.breathing }} </td>
-                    <td><td> <a class="btn btn-inverse-warning btn-fw" href="{% url 'vital_signs_detail' id=vs.id %}" >Update</a></td></td>
+                    <td> {{ hr.hospital }} </td>
+                    <td><td> <a class="btn btn-inverse-warning btn-fw" href="{% url 'hospital_record_detail' id=hr.id %}" >Update</a></td></td>
                     <td>
                       <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">
                         Delete
@@ -60,11 +52,11 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              Are you sure delete the physical created on {{vs.time}}
+                              Are you sure delete this hospital record
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-inverse-secondary btn-fw col-md-4" data-dismiss="modal">Cancle</button>
-                              <a class="btn btn-inverse-danger btn-fw " href="{% url 'vital_signs_delete' id=vs.id %}" >Delete</a>
+                              <a class="btn btn-inverse-danger btn-fw " href="{% url 'hospital_record_delete' id=hr.id %}" >Delete</a>
                             </div>
                           </div>
                         </div>

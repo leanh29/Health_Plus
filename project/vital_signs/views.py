@@ -96,7 +96,6 @@ def update_vital_signs(request, id):
         # Added else statment
             msg = 'Errors: %s' % v_form.errors.as_text()
             return HttpResponse(msg, status=400)
-    return render(request, 'update_physical.html', {'v_form':v_form})
 
 #CALL API DELETE
 @csrf_exempt
