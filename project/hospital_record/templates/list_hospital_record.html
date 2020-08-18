@@ -28,6 +28,9 @@
           <thead>
             <tr>
               <th> Hospital </th>
+              <th> Disease </th>
+              <th> Start Time </th>
+              <th> Status </th>
               <th>  </th>
               <th>  </th>
             </tr>
@@ -36,6 +39,9 @@
                 {% for hr in hospital_record  %}
                 <tr>
                     <td> {{ hr.hospital }} </td>
+                    <td> {{ hr.disease }} </td>
+                    <td> {{ hr.start_time }} </td>
+                    <td> {{ hr.status }} </td>
                     <td><td> <a class="btn btn-inverse-warning btn-fw" href="{% url 'hospital_record_detail' id=hr.id %}" >Update</a></td></td>
                     <td>
                       <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">

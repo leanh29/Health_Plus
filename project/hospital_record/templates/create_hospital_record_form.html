@@ -18,12 +18,33 @@
         <div class="card-body">
             <form class="forms-sample" action="/hospital-record/create/" method="POST">
                 {% csrf_token %}
-                <!-- {{v_form|crispy}} -->
+                <!-- {{h_form|crispy}} -->
                 <div id="div_id_hospital" class="form-group row"> 
                     <label for="id_hospital" class=" requiredField col-sm-3 col-form-label">Hospital<span class="asteriskField">*</span> </label>
                     <div class="col-sm-9"> 
                         <input type="text" name="hospital" value="" class="numberinput form-control" required id="id_hospital" placeholder=""> </div>
                 </div>
+                <div id="div_id_disease" class="form-group row"> 
+                    <label for="id_disease" class=" requiredField col-sm-3 col-form-label">Disease<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="disease" value="" class="numberinput form-control" required id="id_disease" placeholder=""> </div>
+                </div>
+                <div id="div_id_start_time" class="form-group row"> 
+                    <label for="id_start_time" class=" requiredField col-sm-3 col-form-label">Start Time<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="date" name="start_time" value="" class="datetimeinput form-control" required id="id_start_time" placeholder=""> </div>
+                </div>
+                <div id="div_id_status" class="form-group row"> 
+                    <label for="id_status" class=" requiredField col-sm-3 col-form-label">Status<span class="asteriskField">*</span> </label> 
+                    <div class="col-sm-9"> 
+                        <select name="status" class="select form-control" required id="id_status"> 
+                            <option value="" selected>---------</option> 
+                            <option value="In process">In process</option> 
+                            <option value="Done">Done</option>
+                        </select> 
+                    </div> 
+                </div>
+    
                 <div style="display: none;" id="div_id_user" class="form-group"> 
                     <label for="id_user" class=" requiredField">User<span class="asteriskField">*</span> </label> 
                     <div class=""> 

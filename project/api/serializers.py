@@ -20,7 +20,7 @@ class VitalSignsSerializers(serializers.ModelSerializer):
 class HospitalRecordSerializers(serializers.ModelSerializer):
     class Meta:
         model = HospitalRecordModel
-        fields = ['id','hospital','user']
+        fields = ['id', 'hospital', 'disease', 'start_time','status', 'user']
 
 # USER
 class UserSerializers(serializers.ModelSerializer):

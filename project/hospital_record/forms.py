@@ -4,10 +4,10 @@ from .models import HospitalRecordModel
 class PostHospitalRecord(forms.ModelForm):
     class Meta:
         model = HospitalRecordModel
-        fields = ['hospital','user']
+        fields = ['hospital','disease','start_time','status','user']
 
 
 class PutHospitalRecord(forms.ModelForm):
     class Meta:
         model = HospitalRecordModel
-        fields = ['hospital','user']
+        fields = ['hospital','disease','start_time','status','user']

@@ -21,6 +21,25 @@
                     <div class="col-sm-9"> 
                         <input type="text" value="{{hospital_record.hospital}}" name="hospital" value="" class="numberinput form-control" required id="id_hospital" placeholder=""> </div>
                 </div>
+                <div id="div_id_disease" class="form-group row"> 
+                    <label for="id_disease" class=" requiredField col-sm-3 col-form-label">Disease<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="disease" value="{{hospital_record.disease}}" class="numberinput form-control" required id="id_disease" placeholder=""> </div>
+                </div>
+                <div id="div_id_start_time" class="form-group row"> 
+                    <label for="id_start_time" class=" requiredField col-sm-3 col-form-label">Start Time<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="date" value="{{hospital_record.start_time}}" name="start_time" value="{{hospital_record.start_time}}" class="datetimeinput form-control" required id="id_start_time" placeholder=""> </div>
+                </div>
+                <div id="div_id_status" class="form-group row"> 
+                    <label for="id_status" class=" requiredField col-sm-3 col-form-label">Status<span class="asteriskField">*</span> </label> 
+                    <div class="col-sm-9"> 
+                        <select name="status" class="select form-control" required id="id_status"> 
+                            <option value="In process">In process</option> 
+                            <option value="Done">Done</option>
+                        </select> 
+                    </div> 
+                </div>
                 <div style="display: none;" id="div_id_user" class="form-group"> 
                     <label for="id_user" class=" requiredField">User<span class="asteriskField">*</span> </label> 
                     <div class=""> 

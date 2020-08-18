@@ -30,8 +30,15 @@ def save_hospital_record(request):
         h_form = PostHospitalRecord(request.POST)
         if h_form.is_valid():
             hospital = h_form.cleaned_data['hospital']
+            disease = h_form.cleaned_data['disease']
+            start_time = h_form.cleaned_data['start_time']
+            status = h_form.cleaned_data['status']
             user = h_form.cleaned_data['user']
-            r = requests.post('http://127.0.0.1:8000/api/hospital-record/', data = {'hospital':hospital,'user':user.id})
+            r = requests.post('http://127.0.0.1:8000/api/hospital-record/', data = {'hospital':hospital,
+                                                                                    'disease':disease,
+                                                                                    'start_time':start_time,
+                                                                                    'status':status,
+                                                                                    'user':user.id})
             if r.status_code == 200 or 201:
                 data = r.json()
                 print(data)
@@ -67,9 +74,15 @@ def update_hospital_record(request, id):
         h_form = PutHospitalRecord(request.POST)
         if h_form.is_valid():
             hospital = h_form.cleaned_data['hospital']
+            disease = h_form.cleaned_data['disease']
+            start_time = h_form.cleaned_data['start_time']
+            status = h_form.cleaned_data['status']
             user = h_form.cleaned_data['user']
-            print('http://127.0.0.1:8000/api/hospital-record/{}/'.format(id))
-            r = requests.put('http://127.0.0.1:8000/api/hospital-record/{}/'.format(id), data = {'hospital':hospital, 'user':user.id})
+            r = requests.put('http://127.0.0.1:8000/api/hospital-record/{}/'.format(id), data = {'hospital':hospital,
+                                                                                                'disease':disease,
+                                                                                                'start_time':start_time,
+                                                                                                'status':status,
+                                                                                                'user':user.id})
             if r.status_code == 200 or 201:
                 data = r.json()
                 print(data)
