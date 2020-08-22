@@ -1,0 +1,64 @@
+{% extends "base_physical.html" %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> Update Hospital Record </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'hospital_record_list' %}">Hospital Record</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Re-examination</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" action="{% url 're_examination_update' hospital_record_id=hospital_record_id id=re_examination.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="div_id_doctor" class="form-group row"> 
+                    <label for="id_doctor" class=" requiredField col-sm-3 col-form-label">Doctor<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="doctor" value="{{re_examination.doctor}}" class="numberinput form-control" required id="id_doctor" placeholder=""> </div>
+                </div>
+                <div id="div_id_result" class="form-group row"> 
+                    <label for="id_result" class=" requiredField col-sm-3 col-form-label">Result<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="result" value="{{re_examination.result}}" class="numberinput form-control" required id="id_result" placeholder=""> </div>
+                </div>
+                <div id="div_id_date" class="form-group row"> 
+                    <label for="id_date" class=" requiredField col-sm-3 col-form-label">Date<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="date" name="date" value="{{re_examination.date}}" class="datetimeinput form-control" required id="id_date" placeholder=""> </div>
+                </div>
+                <div id="div_id_apoinment_date" class="form-group row"> 
+                    <label for="id_apoinment_date" class=" requiredField col-sm-3 col-form-label">Apoinment_date<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="date" name="appointment_date" value="{{re_examination.appointment_date}}" class="datetimeinput form-control" required id="id_appointment_date" placeholder=""> </div>
+                </div>
+                <!-- <div id="div_id_hospital_record" class="form-group row"> 
+                    <label for="id_hospital_record" class=" requiredField col-sm-3 col-form-label">Status<span class="asteriskField">*</span> </label> 
+                    <div class="col-sm-9"> 
+                        <select name="hospital_record" class="select form-control" required id="id_hospital_record"> 
+                            {% for ho in hos  %}
+                            <option value="" selected>{{ho.hospital}}</option> 
+                            {% endfor %} 
+                        </select>
+                    </div> 
+                </div> -->
+                <div class="row" style="justify-content: center">
+                    <button type="submit" class="btn btn-inverse-warning btn-fw col-md-4"
+                        style="margin: 0px 20px;">Update</button>
+                    <a href="{% url 'physical_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4"
+                        style="margin: 0px 20px;">Cancel</a>
+                    <!-- <button class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</button> -->
+                </div>
+
+                <!-- <button type="submit" class="btn btn-inverse-warning btn-fw col-md-12">Update</button> -->
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+{% endblock content %}

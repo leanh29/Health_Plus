@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'vital_signs.apps.VitalSignsConfig',
     'hospital_record.apps.HospitalRecordConfig',
+    're_examination.apps.ReExaminationConfig',
+    'medical.apps.MedicalConfig',
     'crispy_forms',
     'widget_tweaks',
     'django.contrib.admin',

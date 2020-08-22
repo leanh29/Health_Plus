@@ -5,8 +5,8 @@
     <h3 class="page-title"> Physical List </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Physical</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Physical List</li>
+            <li class="breadcrumb-item active"><a href="{% url 'physical_list' %}">Physical</a></li>
+            <li class="breadcrumb-item " aria-current="page">Physical List</li>
         </ol>
     </nav>
 </div>
@@ -58,7 +58,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              Are you sure delete the physical created on {{phy.date}}
+                              Are you sure delete the physical created on {{phy.date}} ?
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-inverse-secondary btn-fw col-md-4" data-dismiss="modal">Cancle</button>

@@ -1,4 +1,4 @@
-{% extends "base_physical.html" %}
+{% extends "base_hospital_record.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
 {% block page-header %}
@@ -6,7 +6,7 @@
     <h3 class="page-title"> New Hospital Record </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Hospital Record</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'hospital_record_list' %}">Hospital Record</a></li>
             <li class="breadcrumb-item active" aria-current="page">New Hospital Record</li>
         </ol>
     </nav>
@@ -56,7 +56,7 @@
                 <!-- <input value="{{ user }}" style="display: none;" id="id_user" name="user" required id="id_user"> -->
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>
-                    <a href="{% url 'vital_signs_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>
+                    <a href="{% url 'hospital_record_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>
                     <!-- <button class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</button> -->
                 </div>
                 <!-- <button type="submit" class="btn btn-inverse-success btn-fw col-md-6">Save</button>

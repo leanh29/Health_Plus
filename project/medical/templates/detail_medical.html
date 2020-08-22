@@ -1,0 +1,42 @@
+{% extends "base_medical.html" %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> Update Medical </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Medical</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Medical</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url 'medical_update' id=medical.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="div_id_name" class="form-group row"> 
+                    <label for="id_name" class=" requiredField col-sm-3 col-form-label">Name<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" value="{{medical.name}}" name="name" value="" class="numberinput form-control" required id="id_name" placeholder=""> </div>
+                </div>
+                <div id="div_id_effect" class="form-group row"> 
+                    <label for="id_effect" class=" requiredField col-sm-3 col-form-label">Effect<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="effect" value="{{medical.effect}}" class="numberinput form-control" required id="id_effect" placeholder=""> </div>
+                </div>
+
+                <div class="row" style="justify-content: center">
+                    <button type="submit" class="btn btn-inverse-warning btn-fw col-md-4"
+                        style="margin: 0px 20px;">Update</button>
+                    <a href="{% url 'medical_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4"
+                        style="margin: 0px 20px;">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+{% endblock content %}

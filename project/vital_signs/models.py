@@ -11,7 +11,7 @@ class VitalSignsModel(models.Model):
     bool_pressure = models.IntegerField(null=True)
     heartbeat = models.IntegerField(null=True)
     breathing = models.IntegerField(null=True)
-    time = models.DateTimeField(default=datetime.datetime.now(), null=True)
+    time = models.DateTimeField(default=timezone.now(), null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_vital_signs")
 
     class Meta:

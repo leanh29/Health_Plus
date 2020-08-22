@@ -73,24 +73,19 @@ def update_physical(request, id):
     if request.method == "POST":
         form = PutPhysical(request.POST)
         #form = PutPhysical(request.POST,instance=request.physical)
-        if True:#form.is_valid():
-            #print(form.cleaned_data['height'])
-            height = request.POST['height']
-            weight = request.POST['weight']
-            date = request.POST['date']
-            user = request.POST['user']
-            print(height)
-            print(weight)
-            print(user)
-            print('http://127.0.0.1:8000/api/physical/{}/'.format(id))
-            r = requests.put('http://127.0.0.1:8000/api/physical/{}/'.format(id), data = {'height':height, 'weight':weight, 'date':date, 'user':user})
-            if r.status_code == 200:
+        if form.is_valid():
+            height = form.cleaned_data['height']
+            weight = form.cleaned_data['weight']
+            date = form.cleaned_data['date']
+            user = form.cleaned_data['user']
+            r = requests.put('http://127.0.0.1:8000/api/physical/{}/'.format(id), data = {'height':height, 'weight':weight, 'date':date, 'user':user.id})
+            if r.status_code == 200 or 201:
                 data = r.json()
                 print(data)
-    # else:
-    #     form = PutPhysical(instance=request.physical)
-    return render(request, 'update_physical.html', {'form':form})
-    #return redirect('physical_list')
+                return redirect('physical_list')
+        else:
+            msg = 'Errors: %s' % form.errors.as_text()
+            return HttpResponse(msg, status=400)
 
 #CALL API DELETE
 @csrf_exempt

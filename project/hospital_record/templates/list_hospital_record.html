@@ -5,7 +5,7 @@
     <h3 class="page-title"> Hospital Record List </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Hospital Record</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'hospital_record_list' %}">Hospital Record</a></li>
             <li class="breadcrumb-item active" aria-current="page">Hospital Record List</li>
         </ol>
     </nav>
@@ -42,7 +42,8 @@
                     <td> {{ hr.disease }} </td>
                     <td> {{ hr.start_time }} </td>
                     <td> {{ hr.status }} </td>
-                    <td><td> <a class="btn btn-inverse-warning btn-fw" href="{% url 'hospital_record_detail' id=hr.id %}" >Update</a></td></td>
+                    <td><a class="btn btn-inverse-info btn-fw" href="{% url 're_examination_list' hospital_record_id=hr.id %}" >Detail</a></td>
+                    <td><a class="btn btn-inverse-warning btn-fw" href="{% url 'hospital_record_detail' id=hr.id %}" >Update</a></td>
                     <td>
                       <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">
                         Delete
@@ -58,7 +59,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              Are you sure delete this hospital record
+                              Are you sure delete this hospital record for {{ hr.disease }} ?
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-inverse-secondary btn-fw col-md-4" data-dismiss="modal">Cancle</button>

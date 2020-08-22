@@ -24,6 +24,8 @@ from user import urls as urls_user
 from physical import urls as urls_physical
 from vital_signs import urls as urls_vital_signs
 from hospital_record import urls as urls_hospital_record
+from medical import urls as urls_medical
+from re_examination import urls as urls_re_examination
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,7 +33,9 @@ urlpatterns = [
     path('api/', include(urls_api)),
     path('physical/', include(urls_physical)),
     path('vital-signs/', include(urls_vital_signs)),
-    path('hospital-record/', include(urls_hospital_record))
+    path('hospital-record/', include(urls_hospital_record)),
+    path('medical/', include(urls_medical)),
+    path('re-examination/', include(urls_re_examination))
 ]
 
 if settings.DEBUG:

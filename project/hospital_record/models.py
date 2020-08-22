@@ -15,7 +15,7 @@ class HospitalRecordModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_hospital_record")
 
     def __str__(self):
-        return f'{self.user.username}  hospital record {self.id}' 
+        return f'{self.user.username}  hospital record {self.disease}' 
     
     def get_absolute_url(self):
         return reverse('hospital_record_detail',kwargs={'id':self.id})

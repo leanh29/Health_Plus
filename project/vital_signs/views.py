@@ -72,16 +72,12 @@ def get_vital_signs_detail(id):
 def update_vital_signs(request, id):
     if request.method == "POST":
         v_form = PutVitalSigns(request.POST)
-        #form = PutPhysical(request.POST,instance=request.physical)
         if v_form.is_valid():
             temperature = v_form.cleaned_data['temperature']
             bool_pressure = v_form.cleaned_data['bool_pressure']
             heartbeat = v_form.cleaned_data['heartbeat']
             breathing = v_form.cleaned_data['breathing']
             user = v_form.cleaned_data['user']
-            # print(height)
-            # print(weight)
-            # print(user)
             print('http://127.0.0.1:8000/api/vital-signs/{}/'.format(id))
             r = requests.put('http://127.0.0.1:8000/api/vital-signs/{}/'.format(id), data = {'temperature':temperature, 
                                                                                             'bool_pressure':bool_pressure, 

@@ -1,0 +1,68 @@
+{% extends "base_medical.html" %}
+{% load static %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> Medical List </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Medical</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Medical List</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+    <a href="{% url 'create_medical' %}" class="btn btn-inverse-success btn-fw" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Medical</a>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-striped ">
+          <thead>
+            <tr>
+              <th> Name </th>
+              <th> Effect </th>
+              <th>  </th>
+              <th>  </th>
+            </tr>
+          </thead>
+          <tbody>
+                {% for m in medical  %}
+                <tr>
+                    <td> {{ m.name }} </td>
+                    <td> {{ m.effect }} </td>
+                    <td><a class="btn btn-inverse-warning btn-fw" href="{% url 'medical_detail' id=m.id %}" >Update</a></td>
+                    <td>
+                      <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">
+                        Delete
+                      </button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure delete {{ m.name }} ?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-inverse-secondary btn-fw col-md-4" data-dismiss="modal">Cancle</button>
+                              <a class="btn btn-inverse-danger btn-fw " href="{% url 'medical_delete' id=m.id %}" >Delete</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    
+                </tr>
+                {% endfor %}
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

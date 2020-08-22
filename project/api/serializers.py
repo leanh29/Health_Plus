@@ -2,6 +2,8 @@ from rest_framework import serializers
 from physical.models import PhysicalModel
 from vital_signs.models import VitalSignsModel
 from hospital_record.models import HospitalRecordModel
+from re_examination.models import ReExaminationModel
+from medical.models import MedicalModel
 from user.models import User
 
 # PHYSICAL 
@@ -16,11 +18,20 @@ class VitalSignsSerializers(serializers.ModelSerializer):
         model = VitalSignsModel
         fields = ['id','temperature','bool_pressure','heartbeat','breathing','time','user']
 
+
+# RE EXAMINATION
+class ReExaminationSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ReExaminationModel
+        fields = ['id', 'doctor', 'result', 'date','appointment_date', 'hospital_record']
+
 # HOSPITAL RECORD
 class HospitalRecordSerializers(serializers.ModelSerializer):
+    # hr_re_examination = ReExaminationSerializers(many=True)
     class Meta:
         model = HospitalRecordModel
-        fields = ['id', 'hospital', 'disease', 'start_time','status', 'user']
+        # fields = ['id', 'hospital', 'disease', 'start_time','status', 'user']
+        fields = '__all__'
 
 # USER
 class UserSerializers(serializers.ModelSerializer):
@@ -30,8 +41,11 @@ class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
 
-
-
+# MEDICAL 
+class MedicalSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = MedicalModel
+        fields = '__all__'
 
 
 

@@ -1,0 +1,41 @@
+{% extends "base_medical.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> New Medical </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Medical</a></li>
+            <li class="breadcrumb-item active" aria-current="page">New Medical</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form class="forms-sample" action="/medical/create/" method="POST">
+                {% csrf_token %}
+                <!-- {{h_form|crispy}} -->
+                <div id="div_id_name" class="form-group row"> 
+                    <label for="id_name" class=" requiredField col-sm-3 col-form-label">Name<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="name" value="" class="numberinput form-control" required id="id_name" placeholder=""> </div>
+                </div>
+                <div id="div_id_effect" class="form-group row"> 
+                    <label for="id_effect" class=" requiredField col-sm-3 col-form-label">Effect<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="effect" value="" class="numberinput form-control" required id="id_effect" placeholder=""> </div>
+                </div>
+
+                <div class="row" style="justify-content: center">
+                    <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>
+                    <a href="{% url 'medical_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

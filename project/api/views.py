@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 from physical.models import PhysicalModel
 from vital_signs.models import VitalSignsModel
 from hospital_record.models import HospitalRecordModel
-from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers
+from re_examination.models import ReExaminationModel
+from medical.models import MedicalModel
+from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers, ReExaminationSerializers, MedicalSerializers
 
 
 # API FOR PHYSICAL
@@ -57,23 +59,43 @@ class HospitalRecordDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class UserHospitalRecord(generics.ListCreateAPIView):
     serializer_class = HospitalRecordSerializers
-    queryset = HospitalRecordModel.objects.filter(user_id=1)
 
     def get_queryset(self):
-        #user = self.request.user
-        # id = self.kwargs['id']
-        # return HospitalRecordModel.objects.filter(user_id=id)
+        user_id = self.kwargs['pk']
 
-        queryset = HospitalRecordModel.objects.all()
-        id = self.kwargs['pk']
-        # print("------------"+str(id))
-        if id is not None:
-            queryset = HospitalRecordModel.objects.filter(user_id=id)
-            print("================="+str(queryset))
-        return queryset 
+        return HospitalRecordModel.objects.filter(user_id=user_id)
 
-    # def perform_update(self, serializer):
-    #     instance = serializer.save()
+# API FOR RE EXAMINATION
+class ReExaminationList(generics.ListCreateAPIView):
+    serializer_class = ReExaminationSerializers
 
+    def perform_create(self, serializer):
+        serializer.save()
 
+    def get_queryset(self):
+        hospital_record_id = self.kwargs['hospital_record_id']
+
+        return ReExaminationModel.objects.filter(hospital_record__id=hospital_record_id)
+
+class ReExaminationDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ReExaminationModel.objects.all()
+    serializer_class = ReExaminationSerializers
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+
+# API FOR MEDICAL
+class MedicalList(generics.ListCreateAPIView):
+    queryset = MedicalModel.objects.all()
+    serializer_class = MedicalSerializers
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class MedicalDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MedicalModel.objects.all()
+    serializer_class = MedicalSerializers
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
 
