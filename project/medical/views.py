@@ -6,12 +6,17 @@ import requests
 from .forms import PostMedical, PutMedical
 from .serializer import MedicalSerializer
 from django.views.generic import TemplateView, DetailView
+from project import utilities
 
 #CALL API GET LIST
 class GetMedicalList(TemplateView):
-    template_name = 'list_medical.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_medicalmodel', 'list_medical.html')
+
     def get_context_data(self, *args, **kwargs):
         context = {
+            'selected_tab': 'medical',
+            'permissions': utilities.get_user_permissions(self.request.user),
             'medical' : get_medical_list(),
         }
         return context
@@ -26,7 +31,7 @@ def get_medical_list():
 # CALL API POST
 @csrf_exempt
 def save_medical(request):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'add_medicalmodel'):
         m_form = PostMedical(request.POST)
         if m_form.is_valid():
             name = m_form.cleaned_data['name']
@@ -43,13 +48,23 @@ def save_medical(request):
     else:
         m_form = PostMedical()
 
-    return render(request, 'create_medical_form.html',{'m_form':m_form})
+    context =  {
+        'selected_tab': 'medical',
+        'permissions': utilities.get_user_permissions(request.user),
+        'm_form': m_form
+    }
+
+    return render(request, utilities.get_template_name(request.user, 'add_medicalmodel', 'create_medical_form.html'), context)
 
 #CALL API GET DETAIL
 class GetMedicalDetail(TemplateView):
-    template_name = 'detail_medical.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'change_medicalmodel', 'detail_medical.html')
+
     def get_context_data(self, id, *args, **kwargs):
         context = {
+            'selected_tab': 'medical',
+            'permissions': utilities.get_user_permissions(self.request.user),
             'medical' : get_medical_detail(id),
         }
         return context
@@ -63,7 +78,7 @@ def get_medical_detail(id):
 #CALL API PUT
 @csrf_exempt
 def update_medical(request, id):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'change_medicalmodel'):
         m_form = PutMedical(request.POST)
         if m_form.is_valid():
             name = m_form.cleaned_data['name']
@@ -81,9 +96,12 @@ def update_medical(request, id):
 #CALL API DELETE
 @csrf_exempt
 def delete_medical(request, id):
-    r = requests.delete('http://127.0.0.1:8000/api/medical/{}/'.format(id))
-    if r.status_code == 200:
-        messages.success(request, f'Delete successfully')
-        data = r.json()
-        print(data)
+    if utilities.is_permission_granted(request.user, 'delete_medicalmodel'):
+        r = requests.delete('http://127.0.0.1:8000/api/medical/{}/'.format(id))
+
+        if r.status_code == 200:
+            messages.success(request, f'Delete successfully')
+            data = r.json()
+            print(data)
+
     return redirect('medical_list')

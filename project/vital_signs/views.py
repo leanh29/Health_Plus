@@ -6,12 +6,18 @@ import requests
 from .forms import PostVitalSigns, PutVitalSigns
 from .serializer import VitalSignsSerializer
 from django.views.generic import TemplateView, DetailView
+from project import utilities
+import dateutil.parser
 
 #CALL API GET LIST
 class GetVitalSignsList(TemplateView):
-    template_name = 'list_vital_signs.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_vitalsignsmodel', 'list_vital_signs.html')
+
     def get_context_data(self, *args, **kwargs):
         context = {
+            'selected_tab': 'vital_signs',
+            'permissions': utilities.get_user_permissions(self.request.user),
             'vital_signs' : get_vital_signs_list(),
         }
         return context
@@ -21,12 +27,16 @@ def get_vital_signs_list():
     r = requests.get(url)
     vital_signs = r.json()
     vital_signs_list = vital_signs
+
+    for vital_signs in vital_signs_list:
+        vital_signs['time'] = dateutil.parser.parse(vital_signs['time']).strftime("%Y-%m-%d %H:%M")
+
     return vital_signs_list
 
 # CALL API POST
 @csrf_exempt
 def save_vital_signs(request):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'add_vitalsignsmodel'):
         v_form = PostVitalSigns(request.POST)
         if v_form.is_valid():
             temperature = v_form.cleaned_data['temperature']
@@ -50,13 +60,23 @@ def save_vital_signs(request):
     else:
         v_form = PostVitalSigns()
 
-    return render(request, 'create_vital_signs_form.html',{'v_form':v_form})
+    context =  {
+        'selected_tab': 'vital_signs',
+        'permissions': utilities.get_user_permissions(request.user),
+        'v_form': v_form
+    }
+
+    return render(request, utilities.get_template_name(request.user, 'add_vitalsignsmodel', 'create_vital_signs_form.html'), context)
 
 #CALL API GET DETAIL
 class GetVitalSignsDetail(TemplateView):
-    template_name = 'detail_vital_signs.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'change_vitalsignsmodel', 'detail_vital_signs.html')
+
     def get_context_data(self, id, *args, **kwargs):
         context = {
+            'selected_tab': 'vital_signs',
+            'permissions': utilities.get_user_permissions(self.request.user),
             'vital_signs' : get_vital_signs_detail(id),
         }
         return context
@@ -70,7 +90,7 @@ def get_vital_signs_detail(id):
 #CALL API PUT
 @csrf_exempt
 def update_vital_signs(request, id):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'change_vitalsignsmodel'):
         v_form = PutVitalSigns(request.POST)
         if v_form.is_valid():
             temperature = v_form.cleaned_data['temperature']
@@ -96,10 +116,12 @@ def update_vital_signs(request, id):
 #CALL API DELETE
 @csrf_exempt
 def delete_vital(request, id):
-    r = requests.delete('http://127.0.0.1:8000/api/vital-signs/{}/'.format(id))
-    if r.status_code == 200:
-        messages.success(request, f'Delete successfully')
-        data = r.json()
-        print(data)
+    if utilities.is_permission_granted(request.user, 'delete_vitalsignsmodel'):
+        r = requests.delete('http://127.0.0.1:8000/api/vital-signs/{}/'.format(id))
+
+        if r.status_code == 200:
+            messages.success(request, f'Delete successfully')
+            data = r.json()
+            print(data)
+
     return redirect('vital_signs_list')
-    #return render(request, 'list_physical.html')

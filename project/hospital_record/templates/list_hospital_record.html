@@ -1,4 +1,4 @@
-{% extends "base_hospital_record.html" %}
+{% extends "base_project.html" %}
 {% load static %}
 {% block page-header %}
 <div class="page-header">
@@ -19,7 +19,7 @@
         </div>
       {% endfor %}
     {% endif %} -->
-    <a href="{% url 'create_hospital_record' %}" class="btn btn-inverse-success btn-fw" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Hospital Record</a>
+    <a href="{% url 'create_hospital_record' %}" class="btn btn-inverse-success btn-fw {% if not 'add_hospitalrecordmodel' in permissions %} d-none {% endif %}" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Hospital Record</a>
     <!-- <button type="button" class="btn btn-inverse-success btn-fw">New physical</button> -->
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
@@ -31,8 +31,6 @@
               <th> Disease </th>
               <th> Start Time </th>
               <th> Status </th>
-              <th>  </th>
-              <th>  </th>
             </tr>
           </thead>
           <tbody>
@@ -42,9 +40,13 @@
                     <td> {{ hr.disease }} </td>
                     <td> {{ hr.start_time }} </td>
                     <td> {{ hr.status }} </td>
-                    <td><a class="btn btn-inverse-info btn-fw" href="{% url 're_examination_list' hospital_record_id=hr.id %}" >Detail</a></td>
-                    <td><a class="btn btn-inverse-warning btn-fw" href="{% url 'hospital_record_detail' id=hr.id %}" >Update</a></td>
-                    <td>
+                    <td class="{% if not 'view_reexaminationmodel' in permissions %} d-none {% endif %}">
+                      <a class="btn btn-inverse-info btn-fw" href="{% url 're_examination_list' hospital_record_id=hr.id %}" >Detail</a>
+                    </td>
+                    <td class="{% if not 'change_hospitalrecordmodel' in permissions %} d-none {% endif %}">
+                      <a class="btn btn-inverse-warning btn-fw" href="{% url 'hospital_record_detail' id=hr.id %}" >Update</a>
+                    </td>
+                    <td class="{% if not 'delete_hospitalrecordmodel' in permissions %} d-none {% endif %}">
                       <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">
                         Delete
                       </button>

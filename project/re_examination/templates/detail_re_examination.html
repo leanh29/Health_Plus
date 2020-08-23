@@ -1,7 +1,7 @@
-{% extends "base_physical.html" %}
+{% extends "base_project.html" %}
 {% block page-header %}
 <div class="page-header">
-    <h3 class="page-title"> Update Hospital Record </h3>
+    <h3 class="page-title"> Update Re-examination </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'hospital_record_list' %}">Hospital Record</a></li>
@@ -49,7 +49,7 @@
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-warning btn-fw col-md-4"
                         style="margin: 0px 20px;">Update</button>
-                    <a href="{% url 'physical_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4"
+                    <a href="{% url 're_examination_list' hospital_record_id=hospital_record_id %}" class="btn btn-inverse-secondary btn-fw col-md-4"
                         style="margin: 0px 20px;">Cancel</a>
                     <!-- <button class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</button> -->
                 </div>

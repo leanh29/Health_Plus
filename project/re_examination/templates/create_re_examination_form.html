@@ -1,4 +1,4 @@
-{% extends "base_physical.html" %}
+{% extends "base_project.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
 {% block page-header %}
@@ -61,7 +61,7 @@
                 <!-- <input value="{{ user }}" style="display: none;" id="id_user" name="user" required id="id_user"> -->
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>
-                    <a href="{% url 'vital_signs_list' %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>
+                    <a href="{% url 're_examination_list' hospital_record_id=hospital_record_id %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>
                     <!-- <button class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</button> -->
                 </div>
                 <!-- <button type="submit" class="btn btn-inverse-success btn-fw col-md-6">Save</button>

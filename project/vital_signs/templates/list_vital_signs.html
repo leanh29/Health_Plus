@@ -1,4 +1,4 @@
-{% extends "base_vital_signs.html" %}
+{% extends "base_project.html" %}
 {% load static %}
 {% block page-header %}
 <div class="page-header">
@@ -19,7 +19,7 @@
         </div>
       {% endfor %}
     {% endif %} -->
-    <a href="{% url 'create_vital_signs' %}" class="btn btn-inverse-success btn-fw" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Vital Signs</a>
+    <a href="{% url 'create_vital_signs' %}" class="btn btn-inverse-success btn-fw {% if not 'add_vitalsignsmodel' in permissions %} d-none {% endif %}" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Vital Signs</a>
     <!-- <button type="button" class="btn btn-inverse-success btn-fw">New physical</button> -->
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
@@ -32,8 +32,6 @@
               <th> Bool Pressure (mmHg) </th>
               <th> Heartbeat (bpm) </th>
               <th> Breathing (per minute)</th>
-              <th>  </th>
-              <th>  </th>
             </tr>
           </thead>
           <tbody>
@@ -44,8 +42,10 @@
                     <td> {{ vs.bool_pressure }} </td>
                     <td> {{ vs.heartbeat }} </td>
                     <td> {{ vs.breathing }} </td>
-                    <td><td> <a class="btn btn-inverse-warning btn-fw" href="{% url 'vital_signs_detail' id=vs.id %}" >Update</a></td></td>
-                    <td>
+                    <td class="{% if not 'change_vitalsignsmodel' in permissions %} d-none {% endif %}">
+                      <a class="btn btn-inverse-warning btn-fw" href="{% url 'vital_signs_detail' id=vs.id %}" >Update</a>
+                    </td>
+                    <td class="{% if not 'delete_vitalsignsmodel' in permissions %} d-none {% endif %}">
                       <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">
                         Delete
                       </button>

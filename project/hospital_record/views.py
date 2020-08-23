@@ -6,12 +6,17 @@ import requests
 from .forms import PostHospitalRecord, PutHospitalRecord
 from .serializer import HospitalRecordSerializer
 from django.views.generic import TemplateView, DetailView
+from project import utilities
 
 #CALL API GET LIST
 class GetHospitalRecordList(TemplateView):
-    template_name = 'list_hospital_record.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_hospitalrecordmodel', 'list_hospital_record.html')
+
     def get_context_data(self, *args, **kwargs):
         context = {
+            'selected_tab': 'hospital_record',
+            'permissions': utilities.get_user_permissions(self.request.user),
             'hospital_record' : get_hospital_record_list(self.request.user.id),
         }
         return context
@@ -26,7 +31,7 @@ def get_hospital_record_list(user_id):
 # CALL API POST
 @csrf_exempt
 def save_hospital_record(request):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'add_hospitalrecordmodel'):
         h_form = PostHospitalRecord(request.POST)
         if h_form.is_valid():
             hospital = h_form.cleaned_data['hospital']
@@ -50,13 +55,23 @@ def save_hospital_record(request):
     else:
         h_form = PostHospitalRecord()
 
-    return render(request, 'create_hospital_record_form.html',{'h_form':h_form})
+    context =  {
+        'selected_tab': 'hospital_record',
+        'permissions': utilities.get_user_permissions(request.user),
+        'h_form': h_form
+    }
+
+    return render(request, utilities.get_template_name(request.user, 'add_hospitalrecordmodel', 'create_hospital_record_form.html'), context)
 
 #CALL API GET DETAIL
 class GetHospitalRecordDetail(TemplateView):
-    template_name = 'detail_hospital_record.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'change_hospitalrecordmodel', 'detail_hospital_record.html')
+
     def get_context_data(self, id, *args, **kwargs):
         context = {
+            'selected_tab': 'hospital_record',
+            'permissions': utilities.get_user_permissions(self.request.user),
             'hospital_record' : get_hospital_record_detail(id),
         }
         return context
@@ -70,7 +85,7 @@ def get_hospital_record_detail(id):
 #CALL API PUT
 @csrf_exempt
 def update_hospital_record(request, id):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'change_hospitalrecordmodel'):
         h_form = PutHospitalRecord(request.POST)
         if h_form.is_valid():
             hospital = h_form.cleaned_data['hospital']
@@ -95,9 +110,12 @@ def update_hospital_record(request, id):
 #CALL API DELETE
 @csrf_exempt
 def delete_hospital_record(request, id):
-    r = requests.delete('http://127.0.0.1:8000/api/hospital-record/{}/'.format(id))
-    if r.status_code == 200:
-        messages.success(request, f'Delete successfully')
-        data = r.json()
-        print(data)
+    if utilities.is_permission_granted(request.user, 'delete_hospitalrecordmodel'):
+        r = requests.delete('http://127.0.0.1:8000/api/hospital-record/{}/'.format(id))
+
+        if r.status_code == 200:
+            messages.success(request, f'Delete successfully')
+            data = r.json()
+            print(data)
+
     return redirect('hospital_record_list')

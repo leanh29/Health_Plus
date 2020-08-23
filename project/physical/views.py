@@ -6,12 +6,17 @@ import requests
 from .forms import PostPhysical, PutPhysical
 from .serializer import PhysicalSerializer
 from django.views.generic import TemplateView, DetailView
+from project import utilities
 
 #CALL API GET LIST
 class GetPhysicalList(TemplateView):
-    template_name = 'list_physical.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_physicalmodel', 'list_physical.html')
+
     def get_context_data(self, *args, **kwargs):
         context = {
+            'selected_tab': 'physical',
+            'permissions': utilities.get_user_permissions(self.request.user),
             'physical' : get_physical_list(),
         }
         return context
@@ -26,7 +31,7 @@ def get_physical_list():
 # CALL API POST
 @csrf_exempt
 def save_physical(request):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'add_physicalmodel'):
         form = PostPhysical(request.POST)
         if form.is_valid():
             height = form.cleaned_data['height']
@@ -48,15 +53,24 @@ def save_physical(request):
     else:
         form = PostPhysical()
 
-    return render(request, 'create_form.html',{'form':form})
+    context =  {
+        'selected_tab': 'physical',
+        'permissions': utilities.get_user_permissions(request.user),
+        'form': form
+    }
+
+    return render(request, utilities.get_template_name(request.user, 'add_physicalmodel', 'create_form.html'), context)
 
 #CALL API GET DETAIL
 class GetPhysicalDetail(TemplateView):
-    template_name = 'detail_physical.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'change_physicalmodel', 'detail_physical.html')
+
     def get_context_data(self, id, *args, **kwargs):
         context = {
-            'physical' : get_physical_detail(id),
-            'abc': PostPhysical()
+            'selected_tab': 'physical',
+            'permissions': utilities.get_user_permissions(self.request.user),
+            'physical': get_physical_detail(id)
         }
         return context
 
@@ -70,7 +84,7 @@ def get_physical_detail(id):
 #CALL API PUT
 @csrf_exempt
 def update_physical(request, id):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'change_physicalmodel'):
         form = PutPhysical(request.POST)
         #form = PutPhysical(request.POST,instance=request.physical)
         if form.is_valid():
@@ -90,20 +104,12 @@ def update_physical(request, id):
 #CALL API DELETE
 @csrf_exempt
 def delete_physical(request, id):
-    print('http://127.0.0.1:8000/api/physical/{}/'.format(id))
-    r = requests.delete('http://127.0.0.1:8000/api/physical/{}/'.format(id))
-    if r.status_code == 200:
-        messages.success(request, f'Delete successfully')
-        data = r.json()
-        print(data)
+    if utilities.is_permission_granted(request.user, 'delete_physicalmodel'):
+        r = requests.delete('http://127.0.0.1:8000/api/physical/{}/'.format(id))
+
+        if r.status_code == 200:
+            messages.success(request, f'Delete successfully')
+            data = r.json()
+            print(data)
+
     return redirect('physical_list')
-    #return render(request, 'list_physical.html')
-    
-    
-
-        
-
-
-        
-        
-

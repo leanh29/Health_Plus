@@ -1,4 +1,4 @@
-{% extends "base_medical.html" %}
+{% extends "base_project.html" %}
 {% load static %}
 {% block page-header %}
 <div class="page-header">
@@ -12,7 +12,7 @@
 </div>
 {% endblock page-header %}
 {% block content %}
-    <a href="{% url 'create_medical' %}" class="btn btn-inverse-success btn-fw" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Medical</a>
+    <a href="{% url 'create_medical' %}" class="btn btn-inverse-success btn-fw {% if not 'add_medicalmodel' in permissions %} d-none {% endif %}" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Medical</a>
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
@@ -21,8 +21,6 @@
             <tr>
               <th> Name </th>
               <th> Effect </th>
-              <th>  </th>
-              <th>  </th>
             </tr>
           </thead>
           <tbody>
@@ -30,8 +28,10 @@
                 <tr>
                     <td> {{ m.name }} </td>
                     <td> {{ m.effect }} </td>
-                    <td><a class="btn btn-inverse-warning btn-fw" href="{% url 'medical_detail' id=m.id %}" >Update</a></td>
-                    <td>
+                    <td class="{% if not 'change_medicalmodel' in permissions %} d-none {% endif %}">
+                      <a class="btn btn-inverse-warning btn-fw" href="{% url 'medical_detail' id=m.id %}" >Update</a>
+                    </td>
+                    <td class="{% if not 'delete_medicalmodel' in permissions %} d-none {% endif %}">
                       <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">
                         Delete
                       </button>

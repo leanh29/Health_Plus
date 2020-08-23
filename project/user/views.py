@@ -3,10 +3,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm
+from project import utilities
  
 @login_required 
 def home(request):
-    return render(request,'home.html') 
+    context = {'permissions': utilities.get_user_permissions(request.user)}
+    return render(request,'home.html', context) 
 
 def register(request):
     if request.method == 'POST': 

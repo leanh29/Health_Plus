@@ -1,4 +1,4 @@
-{% extends "base_physical.html" %}
+{% extends "base_project.html" %}
 {% load static %}
 {% block page-header %}
 <div class="page-header">
@@ -19,7 +19,7 @@
         </div>
       {% endfor %}
     {% endif %} -->
-    <a href="{% url 'create_physical' %}" class="btn btn-inverse-success btn-fw" style="margin-right: 20px; float: right; margin-bottom: 10px;">New physical</a>
+    <a href="{% url 'create_physical' %}" class="btn btn-inverse-success btn-fw {% if not 'add_physicalmodel' in permissions %} d-none {% endif %}" style="margin-right: 20px; float: right; margin-bottom: 10px;">New physical</a>
     <!-- <button type="button" class="btn btn-inverse-success btn-fw">New physical</button> -->
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
@@ -30,8 +30,6 @@
               <th> Date </th>
               <th> Height (cm) </th>
               <th> Weight (kg) </th>
-              <th>  </th>
-              <th>  </th>
             </tr>
           </thead>
           <tbody>
@@ -40,9 +38,10 @@
                     <td> {{ phy.date }} </td>
                     <td> {{ phy.height }} </td>
                     <td>   {{ phy.weight }} </td>
-                    <td> <a class="btn btn-inverse-warning btn-fw" href="{% url 'physical_detail' id=phy.id %}" >Update</a></td>
-                    
-                    <td>
+                    <td class="{% if not 'change_physicalmodel' in permissions %} d-none {% endif %}">
+                      <a class="btn btn-inverse-warning btn-fw" href="{% url 'physical_detail' id=phy.id %}">Update</a>
+                    </td>
+                    <td class="{% if not 'delete_physicalmodel' in permissions %} d-none {% endif %}">
                       <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">
                         Delete
                       </button>

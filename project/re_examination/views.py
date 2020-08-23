@@ -6,14 +6,17 @@ import requests
 from .forms import PostReExamination, PutReExamination
 from .serializer import ReExeminationSerializer
 from django.views.generic import TemplateView, DetailView
-# Create your views here.
+from project import utilities
 
 #CALL API GET LIST
 class GetReExaminationList(TemplateView):
-    template_name = 'list_re_examination.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_reexaminationmodel', 'list_re_examination.html')
 
     def get_context_data(self, hospital_record_id, *args, **kwargs):
         context = {
+            'selected_tab': 'hospital_record',
+            'permissions': utilities.get_user_permissions(self.request.user),
             'hospital_record_id': hospital_record_id,
             're_examination' : get_re_examination_list(hospital_record_id),
         }
@@ -36,7 +39,7 @@ def get_hr_record_user_list():
 # CALL API POST
 @csrf_exempt
 def save_re_examination(request, hospital_record_id):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'add_reexaminationmodel'):
         r_form = PostReExamination(request.POST)
         if r_form.is_valid():
             doctor = r_form.cleaned_data['doctor']
@@ -59,12 +62,19 @@ def save_re_examination(request, hospital_record_id):
     else:
         r_form = PostReExamination()
 
-    return render(request, 'create_re_examination_form.html',{'r_form':r_form})
+    context =  {
+        'selected_tab': 'hospital_record',
+        'permissions': utilities.get_user_permissions(request.user),
+        'hospital_record_id': hospital_record_id,
+        'r_form': r_form
+    }
+
+    return render(request, utilities.get_template_name(request.user, 'add_reexaminationmodel', 'create_re_examination_form.html'), context)
 
 #CALL API PUT
 @csrf_exempt
 def update_re_examination(request, hospital_record_id, id):
-    if request.method == "POST":
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'change_reexaminationmodel'):
         r_form = PutReExamination(request.POST)
 
         if r_form.is_valid():
@@ -91,19 +101,25 @@ def update_re_examination(request, hospital_record_id, id):
 #CALL API DELETE
 @csrf_exempt
 def delete_re_examination(request, hospital_record_id, id):
-    r = requests.delete('http://127.0.0.1:8000/api/re-examination/{}/'.format(id))
-    if r.status_code == 200:
-        messages.success(request, f'Delete successfully')
-        data = r.json()
-        print(data)
+    if utilities.is_permission_granted(request.user, 'delete_reexaminationmodel'):
+        r = requests.delete('http://127.0.0.1:8000/api/re-examination/{}/'.format(id))
+
+        if r.status_code == 200:
+            messages.success(request, f'Delete successfully')
+            data = r.json()
+            print(data)
+
     return redirect('re_examination_list', hospital_record_id=hospital_record_id)
 
 #CALL API GET DETAIL
 class GetReExaminationDetail(TemplateView):
-    template_name = 'detail_re_examination.html'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'change_reexaminationmodel', 'detail_re_examination.html')
 
     def get_context_data(self, hospital_record_id, id, *args, **kwargs):
         context = {
+            'selected_tab': 'hospital_record',
+            'permissions': utilities.get_user_permissions(self.request.user),
             'hospital_record_id': hospital_record_id,
             're_examination' : get_re_examination_detail(id),
         }
