@@ -8,4 +8,5 @@ urlpatterns = [
     path('list/<int:hospital_record_id>/detail/<int:id>/', GetReExaminationDetail.as_view(), name='re_examination_detail'),
     path('list/<int:hospital_record_id>/update/<int:id>/', update_re_examination, name='re_examination_update'),
     path('list/<int:hospital_record_id>/delete/<int:id>/', delete_re_examination, name='re_examination_delete'),
+    path('list/<int:hospital_record_id>/detail/<int:id>/medical', GetReExaminationDetail.as_view(), name='medical_detail_list'),
 ]

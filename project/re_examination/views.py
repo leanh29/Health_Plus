@@ -8,7 +8,7 @@ from .serializer import ReExeminationSerializer
 from django.views.generic import TemplateView, DetailView
 from project import utilities
 
-#CALL API GET LIST
+#CALL API GET RE-EXAMINATION LIST
 class GetReExaminationList(TemplateView):
     def get_template_names(self):
         return utilities.get_template_names(self.request.user, 'view_reexaminationmodel', 'list_re_examination.html')
@@ -29,12 +29,23 @@ def get_re_examination_list(hospital_record_id):
     re_examination_list = re_examination
     return re_examination_list
 
-def get_hr_record_user_list():
-    url = 'http://127.0.0.1:8000/api/hospital-record/user'
-    r = requests.get(url)
-    hr_user = r.json()
-    hr_user_list = hr_user
-    return hr_user_list
+# CALL API GET MEDICAL LIST OF RE-EXAMINATION
+# def get_medical_detail_list(re_examination_id=None):
+#     #if re_examination_id:
+#     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/{}/'.format(re_examination_id)
+#     # else:
+#     #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
+
+#     return requests.get(url).json()
+
+# CALL API GET MEDICAL LIST 
+def get_medical_list(re_examination_id=None):
+    # if re_examination_id:
+    #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/{}/'.format(re_examination_id)
+    # else:
+    url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
+
+    return requests.get(url).json()
 
 # CALL API POST
 @csrf_exempt
@@ -66,6 +77,7 @@ def save_re_examination(request, hospital_record_id):
         'selected_tab': 'hospital_record',
         'permissions': utilities.get_user_permissions(request.user),
         'hospital_record_id': hospital_record_id,
+        'medical_detail_list': get_medical_detail_list(),
         'r_form': r_form
     }
 
@@ -111,19 +123,27 @@ def delete_re_examination(request, hospital_record_id, id):
 
     return redirect('re_examination_list', hospital_record_id=hospital_record_id)
 
-#CALL API GET DETAIL
+#CALL API GET RE-EXAMINATION DETAIL (PRESCRIPTION)
 class GetReExaminationDetail(TemplateView):
     def get_template_names(self):
-        return utilities.get_template_names(self.request.user, 'change_reexaminationmodel', 'detail_re_examination.html')
+        return utilities.get_template_names(self.request.user, 'view_medicaldetailmodel', 'list_medical_detail.html')
 
     def get_context_data(self, hospital_record_id, id, *args, **kwargs):
         context = {
             'selected_tab': 'hospital_record',
             'permissions': utilities.get_user_permissions(self.request.user),
             'hospital_record_id': hospital_record_id,
-            're_examination' : get_re_examination_detail(id),
+            'medical_detail_list': get_medical_detail_list(id),
         }
         return context
+
+def get_medical_detail_list(re_examination_id=None):
+    #if re_examination_id:
+    url = 'http://127.0.0.1:8000/api/medical-detail/{}/'.format(re_examination_id)
+    # else:
+    #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
+
+    return requests.get(url).json()
 
 def get_re_examination_detail(id):
     url = 'http://127.0.0.1:8000/api/re-examination/'+str(id)

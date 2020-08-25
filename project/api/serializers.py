@@ -3,7 +3,7 @@ from physical.models import PhysicalModel
 from vital_signs.models import VitalSignsModel
 from hospital_record.models import HospitalRecordModel
 from re_examination.models import ReExaminationModel
-from medical.models import MedicalModel
+from medical.models import MedicalModel, MedicalDetailModel
 from user.models import User
 
 # PHYSICAL 
@@ -43,10 +43,17 @@ class UserSerializers(serializers.ModelSerializer):
 
 # MEDICAL 
 class MedicalSerializers(serializers.ModelSerializer):
+    #medical_prescription = MedicalDetailModel(many=True)
     class Meta:
         model = MedicalModel
         fields = '__all__'
 
+# MEDICAL DETAIL
+class MedicalDetailSerializers(serializers.ModelSerializer):
+    quantity = serializers.ReadOnlyField()
+    time = serializers.ReadOnlyField()
 
-
-        
+    class Meta:
+        model = MedicalModel
+        #model = MedicalDetailModel
+        fields = '__all__'

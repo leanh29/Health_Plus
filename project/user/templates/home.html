@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_project.html" %}
 {% load static %}
 {% block page-header %}
 <div class="page-header">
@@ -16,6 +16,8 @@
   </div>
 {% endblock page-header %}
 
+{% block content %}
+  
 {% block page_content_1 %}
 <div class="row">
     <div class="col-md-4 stretch-card grid-margin">
@@ -330,3 +332,6 @@
     </div>
   </div>
 {% endblock page_content_5 %}
+
+{% endblock content %}
+

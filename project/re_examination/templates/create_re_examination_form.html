@@ -39,33 +39,34 @@
                     <div class="col-sm-9"> 
                         <input type="date" name="appointment_date" value="" class="datetimeinput form-control" required id="id_appointment_date" placeholder=""> </div>
                 </div>
-                <!-- <div id="div_id_hospital_record" class="form-group row"> 
-                    <label for="id_hospital_record" class=" requiredField col-sm-3 col-form-label">Status<span class="asteriskField">*</span> </label> 
-                    <div class="col-sm-9"> 
-                        <select name="hospital_record" class="select form-control" required id="id_hospital_record"> 
-                            {% for ho in hos  %}
-                            <option value="" selected>{{ho.hospital}}</option> 
-                            {% endfor %} 
-                        </select>
-                    </div> 
-                </div> -->
-    
-                <!-- <div id="div_id_user" class="form-group"> 
-                    <label for="id_user" class=" requiredField">User<span class="asteriskField">*</span> </label> 
-                    <div class=""> 
-                        <select name="user" class="select form-control" required id="id_user" value={{user}}> 
-                            <option value="{{user.id}}" selected>{{user}}</option> 
-                        </select>
-                    </div>
-                </div> -->
-                <!-- <input value="{{ user }}" style="display: none;" id="id_user" name="user" required id="id_user"> -->
+
+                <div>
+                    <table class="table table-striped ">
+                        <thead>
+                            <tr>
+                                <th> Medical </th>
+                                <th> Effect </th>
+                                <th> Quantity </th>
+                                <th> Time </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for medical_detail in medical_detail_list  %}
+                                <tr>
+                                    <td> {{ medical_detail.name }} </td>
+                                    <td> {{ medical_detail.effect }} </td>
+                                    <td> 0 </td>
+                                    <td> 0 </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>
                     <a href="{% url 're_examination_list' hospital_record_id=hospital_record_id %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>
-                    <!-- <button class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</button> -->
                 </div>
-                <!-- <button type="submit" class="btn btn-inverse-success btn-fw col-md-6">Save</button>
-                <button class="btn btn-inverse-secondary btn-fw col-md-6">Cancel</button> -->
             </form>
         </div>
     </div>

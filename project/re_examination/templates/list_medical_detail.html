@@ -1,0 +1,51 @@
+{% extends "base_project.html" %}
+{% load static %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> Re-examination List </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'hospital_record_list' %}">Hospital Record</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Re-examination List</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+<!-- {% if messages %}
+      {% for message in messages  %}
+        <div style="color: blue;" class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %} -->
+    <a href="{% url 'create_re_examination' hospital_record_id %}" class="btn btn-inverse-success btn-fw {% if not 'add_reexaminationmodel' in permissions %} d-none {% endif %}" style="margin-right: 20px; float: right; margin-bottom: 10px;">New Re-examination</a>
+    <!-- <button type="button" class="btn btn-inverse-success btn-fw">New physical</button> -->
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-striped ">
+          <thead>
+            <tr>
+              <th> Meidcical </th>
+              <th> Quantity </th>
+              <th> Times </th>
+              <!-- <th> Appointment date </th> -->
+            </tr>
+          </thead>
+          <tbody>
+                {% for medical in medical_detail_list  %}
+                <tr>
+                    <td> {{ medical.name }} </td>
+                    <td> {{ medical.quantity }} </td>
+                    <td> {{ medical.time }} </td>
+                </tr>
+                {% endfor %}
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

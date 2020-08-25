@@ -1,0 +1,47 @@
+{% extends "base_project.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block page-header %}
+<div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+          <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+{% endblock page-header %}
+
+{% block content %}
+{% block page_content_1 %}
+<div class="row">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Profile</h4>
+          <div class="table-responsive">
+            <img src="{{ user.profile.image.url }} " class="rounded-circle" alt="" width="200" height="200" style="margin-left: 435px;">
+            <form action="" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <fieldset >
+                  <!-- <legend>
+                      Profile
+                  </legend> -->
+                  {{ u_form|crispy }}
+                  {{ p_form|crispy }}  
+              </fieldset>
+              <div>
+                <button type="submit" class="btn btn-inverse-danger btn-fw">Update</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock page_content_1 %}
+{% endblock content %}
+ 
+
+

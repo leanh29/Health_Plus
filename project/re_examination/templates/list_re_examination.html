@@ -40,6 +40,9 @@
                     <td> {{ re.result }} </td>
                     <td> {{ re.date }} </td>
                     <td> {{ re.appointment_date }} </td>
+                    <td class="{% if not 'change_medicaldetailmodel' in permissions %} d-none {% endif %}">
+                      <a class="btn btn-inverse-info btn-fw" href="{% url 'medical_detail_list' hospital_record_id=hospital_record_id id=re.id %}" >Prescription</a>
+                    </td>
                     <td class="{% if not 'change_reexaminationmodel' in permissions %} d-none {% endif %}">
                       <a class="btn btn-inverse-warning btn-fw" href="{% url 're_examination_detail' hospital_record_id=hospital_record_id id=re.id %}" >Update</a>
                     </td>

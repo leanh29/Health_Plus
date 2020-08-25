@@ -53,8 +53,8 @@
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
+                <a class="dropdown-item" href="{% url 'profile' %}">
+                  <i class="mdi mdi-cached mr-2 text-success"></i> Profile </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'logout' %}">
                   <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
@@ -65,7 +65,7 @@
                 <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
               </a>
             </li>
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-email-outline"></i>
                 <span class="count-symbol bg-warning"></span>
@@ -117,7 +117,7 @@
                 <div class="dropdown-divider"></div>
                 <h6 class="p-3 mb-0 text-center">See all notifications</h6>
               </div>
-            </li>
+            </li> -->
             <li class="nav-item nav-settings d-none d-lg-block">
               <a class="nav-link" href="#">
                 <i class="mdi mdi-format-line-spacing"></i>
@@ -223,9 +223,9 @@
           </ul>
         </nav>
         <!-- partial -->
-        <div class="main-panel">
+        <div class="main-panel" >
           <div class="content-wrapper">
-            <!-- <div class="row" id="proBanner">
+            <div class="row" id="proBanner">
               <div class="col-12">
                 <span class="d-flex align-items-center purchase-popup">
                   <p>Like what you see? Check out our premium version for more.</p>
@@ -234,7 +234,7 @@
                   <i class="mdi mdi-close" id="bannerClose"></i>
                 </span>
               </div>
-            </div> -->
+            </div>
             {% block page-header %}
               
             {% endblock page-header %}
