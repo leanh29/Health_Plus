@@ -18,12 +18,12 @@ class GetVitalSignsList(TemplateView):
         context = {
             'selected_tab': 'vital_signs',
             'permissions': utilities.get_user_permissions(self.request.user),
-            'vital_signs' : get_vital_signs_list(),
+            'vital_signs' : get_vital_signs_list(self.request.user.id),
         }
         return context
 
-def get_vital_signs_list():
-    url = 'http://127.0.0.1:8000/api/vital-signs/'
+def get_vital_signs_list(user_id):
+    url = 'http://127.0.0.1:8000/api/vital-signs/user/'+str(user_id)
     r = requests.get(url)
     vital_signs = r.json()
     vital_signs_list = vital_signs

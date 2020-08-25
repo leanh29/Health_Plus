@@ -50,6 +50,14 @@ class VitalSignsDetail(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         instance = serializer.save()
 
+class UserVitalSigns(generics.ListCreateAPIView):
+    serializer_class = VitalSignsSerializers
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+
+        return VitalSignsModel.objects.filter(user_id=user_id)
+
 # API FOR HOSPITAL RECORD
 class HospitalRecordList(generics.ListCreateAPIView):
     queryset = HospitalRecordModel.objects.all()
