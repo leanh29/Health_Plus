@@ -27,6 +27,14 @@ class PhysicalDetail(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         instance = serializer.save()
 
+class UserPhysical(generics.ListCreateAPIView):
+    serializer_class = PhysicalSerializers
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+
+        return PhysicalModel.objects.filter(user_id=user_id)
+
 # API FOR VITAL SIGNS
 class VitalSignsList(generics.ListCreateAPIView):
     queryset = VitalSignsModel.objects.all()

@@ -17,12 +17,12 @@ class GetPhysicalList(TemplateView):
         context = {
             'selected_tab': 'physical',
             'permissions': utilities.get_user_permissions(self.request.user),
-            'physical' : get_physical_list(),
+            'physical' : get_physical_list(self.request.user.id),
         }
         return context
 
-def get_physical_list():
-    url = 'http://127.0.0.1:8000/api/physical/'
+def get_physical_list(user_id):
+    url = 'http://127.0.0.1:8000/api/physical/user/'+str(user_id)
     r = requests.get(url)
     physical = r.json()
     physical_list = physical
