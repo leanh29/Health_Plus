@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles'
-    
 ]
 
 MIDDLEWARE = [
@@ -161,4 +160,6 @@ EMAIL_HOST_PASSWORD = 'leanhbb2909'
 #         'rest_framework.parsers.FormParser',
 #     )
 # }
-
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+# }

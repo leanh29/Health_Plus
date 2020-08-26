@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import generics, status
 from rest_framework.response import Response
+#from django_filters import rest_framework as filters
 from django.contrib.auth.models import User
 from physical.models import PhysicalModel
 from vital_signs.models import VitalSignsModel
@@ -58,10 +59,13 @@ class UserVitalSigns(generics.ListCreateAPIView):
 
         return VitalSignsModel.objects.filter(user_id=user_id)
 
-# API FOR HOSPITAL RECORD
+
+# ---------------------------------------------------API FOR HOSPITAL RECORD------------------------------
 class HospitalRecordList(generics.ListCreateAPIView):
     queryset = HospitalRecordModel.objects.all()
     serializer_class = HospitalRecordSerializers
+    # filter_backends = [filters.SearchFilter]
+    # search_fields = ['hospital', 'disease']
 
     def perform_create(self, serializer):
         serializer.save()
@@ -81,7 +85,8 @@ class UserHospitalRecord(generics.ListCreateAPIView):
 
         return HospitalRecordModel.objects.filter(user_id=user_id)
 
-# API FOR RE EXAMINATION
+
+# ----------------------------------------------------API FOR RE EXAMINATION------------------------------
 class ReExaminationList(generics.ListCreateAPIView):
     serializer_class = ReExaminationSerializers
 
