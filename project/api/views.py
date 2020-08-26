@@ -10,7 +10,7 @@ from vital_signs.models import VitalSignsModel
 from hospital_record.models import HospitalRecordModel
 from re_examination.models import ReExaminationModel
 from medical.models import MedicalModel, MedicalDetailModel
-from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers, ReExaminationSerializers, MedicalSerializers, MedicalDetailSerializers
+from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers, ReExaminationSerializers, MedicalSerializers, MedicalDetailSerializersGet, MedicalDetailSerializersPost
 
 
 # API FOR PHYSICAL
@@ -121,57 +121,57 @@ class MedicalDetail(generics.RetrieveUpdateDestroyAPIView):
         instance = serializer.save()
 
 # API FOR MEDICAL DETAIL
-class MedicalDetailList(generics.ListCreateAPIView):
-    serializer_class = MedicalDetailSerializers
+# class MedicalDetailListtt(generics.ListCreateAPIView):
+#     serializer_class = MedicalDetailSerializers
 
-    def perform_create(self, serializer):
-        serializer.save()
+#     def perform_create(self, serializer):
+#         serializer.save()
 
-    def get_queryset(self, re_examination_id=12):
-        if re_examination_id:
-            print("-----------------"+str(re_examination_id))
-            sql ="""
-            SELECT
-                m.id,
-                m.name,
-                m.effect,
-                md.quantity,
-                md.time
-            FROM
-                medical_medicalmodel m
-                LEFT JOIN
-                (
-                    SELECT
-                        medical_id,
-                        quantity,
-                        time
-                    FROM
-                        medical_medicaldetailmodel
-                    WHERE
-                        re_examination_id = {}
-                ) md
-                ON m.id = md.medical_id
-            ORDER BY
-                m.name
-            """.format(re_examination_id)
-        else:
-            print("---------------sssssssss--"+str(re_examination_id))
-            sql = """
-                SELECT
-                    id,
-                    name,
-                    effect,
-                    0 as quantity,
-                    0 as time
-                FROM
-                    medical_medicalmodel
-                ORDER BY
-                    name
-            """
+#     def get_queryset(self, re_examination_id=12):
+#         if re_examination_id:
+#             print("-----------------"+str(re_examination_id))
+#             sql ="""
+#             SELECT
+#                 m.id,
+#                 m.name,
+#                 m.effect,
+#                 md.quantity,
+#                 md.time
+#             FROM
+#                 medical_medicalmodel m
+#                 LEFT JOIN
+#                 (
+#                     SELECT
+#                         medical_id,
+#                         quantity,
+#                         time
+#                     FROM
+#                         medical_medicaldetailmodel
+#                     WHERE
+#                         re_examination_id = {}
+#                 ) md
+#                 ON m.id = md.medical_id
+#             ORDER BY
+#                 m.name
+#             """.format(re_examination_id)
+#         else:
+#             print("---------------sssssssss--"+str(re_examination_id))
+#             sql = """
+#                 SELECT
+#                     id,
+#                     name,
+#                     effect,
+#                     0 as quantity,
+#                     0 as time
+#                 FROM
+#                     medical_medicalmodel
+#                 ORDER BY
+#                     name
+#             """
 
-        return MedicalModel.objects.raw(sql)
+#         return MedicalModel.objects.raw(sql)
 
-class MedicalReExamination(generics.ListCreateAPIView):
+class MedicalDetailGet(generics.ListCreateAPIView):
     # serializer_class = MedicalDetailSerializers
 
     # def get_queryset(self):
@@ -179,7 +179,7 @@ class MedicalReExamination(generics.ListCreateAPIView):
 
     #     return MedicalDetailModel.objects.filter(re_examination_id=re_examination_id)
 
-    serializer_class = MedicalDetailSerializers
+    serializer_class = MedicalDetailSerializersGet
 
     def perform_create(self, serializer):
         serializer.save()
@@ -197,7 +197,7 @@ class MedicalReExamination(generics.ListCreateAPIView):
             md.time
         FROM
             medical_medicalmodel m
-            LEFT JOIN
+            INNER JOIN
             (
                 SELECT
                     medical_id,
@@ -215,4 +215,15 @@ class MedicalReExamination(generics.ListCreateAPIView):
 
         print("-----------------"+sql)
 
-        return MedicalModel.objects.raw(sql)
+        return MedicalDetailModel.objects.raw(sql)
+
+class MedicalDetailPost(generics.ListCreateAPIView):
+    serializer_class = MedicalDetailSerializersPost
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def get_queryset(self):
+        re_examination_id = self.kwargs['re_examination_id']
+
+        return MedicalDetailModel.objects.filter(re_examination_id=re_examination_id)

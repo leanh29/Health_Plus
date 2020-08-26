@@ -49,11 +49,28 @@ class MedicalSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 # MEDICAL DETAIL
-class MedicalDetailSerializers(serializers.ModelSerializer):
-    quantity = serializers.ReadOnlyField()
-    time = serializers.ReadOnlyField()
+class MedicalDetailSerializersGet(serializers.ModelSerializer):
+    # quantity = serializers.ReadOnlyField()
+    # time = serializers.ReadOnlyField()
+    name = serializers.ReadOnlyField()
+    effect = serializers.ReadOnlyField()
+    re_examination = serializers.ReadOnlyField()
+    medical = serializers.ReadOnlyField()
 
     class Meta:
-        model = MedicalModel
-        #model = MedicalDetailModel
+        #model = MedicalModel
+        model = MedicalDetailModel
+        fields = '__all__'
+
+class MedicalDetailSerializersPost(serializers.ModelSerializer):
+    # quantity = serializers.ReadOnlyField()
+    # time = serializers.ReadOnlyField()
+    # name = serializers.ReadOnlyField()
+    # effect = serializers.ReadOnlyField()
+    # re_examination = serializers.ReadOnlyField()
+    # medical = serializers.ReadOnlyField()
+
+    class Meta:
+        #model = MedicalModel
+        model = MedicalDetailModel
         fields = '__all__'

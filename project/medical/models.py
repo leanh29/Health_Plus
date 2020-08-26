@@ -23,7 +23,7 @@ class MedicalDetailModel(models.Model):
     time = models.IntegerField(null=True)
 
     def __str__(self):
-        return f'{self.re_examination.disease} - {self.medical.name}'
+        return f'{self.re_examination.appointment_date} - {self.medical.name}'
 
     def get_absolute_url(self):
         return reverse('medical_detail_detail',kwargs={'id':self.id})

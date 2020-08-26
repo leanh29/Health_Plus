@@ -11,3 +11,4 @@ class PutReExamination(forms.ModelForm):
     class Meta:
         model = ReExaminationModel
         fields = ['doctor','result','date','appointment_date']
+

@@ -4,10 +4,13 @@ from django.conf import settings
 from django.contrib import messages
 import requests
 from .forms import PostReExamination, PutReExamination
+from medical.forms import PostMedicalDetail
 from .serializer import ReExeminationSerializer
 from django.views.generic import TemplateView, DetailView
 from project import utilities
 
+# -------------------------------------------------------------------------------------------------
+# ------------------------------------------------------RE-EXAMINATION --------------------------------------------------------------
 #CALL API GET RE-EXAMINATION LIST
 class GetReExaminationList(TemplateView):
     def get_template_names(self):
@@ -29,23 +32,12 @@ def get_re_examination_list(hospital_record_id):
     re_examination_list = re_examination
     return re_examination_list
 
-# CALL API GET MEDICAL LIST OF RE-EXAMINATION
-# def get_medical_detail_list(re_examination_id=None):
-#     #if re_examination_id:
-#     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/{}/'.format(re_examination_id)
-#     # else:
-#     #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
-
-#     return requests.get(url).json()
-
-# CALL API GET MEDICAL LIST 
-def get_medical_list(re_examination_id=None):
-    # if re_examination_id:
-    #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/{}/'.format(re_examination_id)
-    # else:
-    url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
-
-    return requests.get(url).json()
+def get_re_examination_detail(id):
+    url = 'http://127.0.0.1:8000/api/re-examination/'+str(id)
+    r = requests.get(url)
+    re_examination = r.json()
+    print(re_examination)
+    return re_examination
 
 # CALL API POST
 @csrf_exempt
@@ -71,13 +63,14 @@ def save_re_examination(request, hospital_record_id):
             msg = 'Errors: %s' % r_form.errors.as_text()
             return HttpResponse(msg, status=400)
     else:
+        print("----------------------------")
         r_form = PostReExamination()
 
     context =  {
         'selected_tab': 'hospital_record',
         'permissions': utilities.get_user_permissions(request.user),
         'hospital_record_id': hospital_record_id,
-        'medical_detail_list': get_medical_detail_list(),
+        #'medical_detail_list': get_medical_detail_list(),
         'r_form': r_form
     }
 
@@ -123,7 +116,30 @@ def delete_re_examination(request, hospital_record_id, id):
 
     return redirect('re_examination_list', hospital_record_id=hospital_record_id)
 
-#CALL API GET RE-EXAMINATION DETAIL (PRESCRIPTION)
+# -------------------------------------------------------------------------------------------------
+# --------------------------------------- MEDICAL DETAIL ------------------------------------------
+
+# CALL API GET MEDICAL LIST OF RE-EXAMINATION
+# def get_medical_detail_list(re_examination_id=None):
+#     #if re_examination_id:
+#     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/{}/'.format(re_examination_id)
+#     # else:
+#     #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
+
+#     return requests.get(url).json()
+
+# CALL API GET MEDICAL DETAIL LIST 
+# def get_medical_detail_list(re_examination_id=None):
+#     # if re_examination_id:
+#     #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/{}/'.format(re_examination_id)
+#     # else:
+#     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
+
+#     return requests.get(url).json()
+
+
+
+#CALL API GET MEDICAL DETAIL (PRESCRIPTION)
 class GetReExaminationDetail(TemplateView):
     def get_template_names(self):
         return utilities.get_template_names(self.request.user, 'view_medicaldetailmodel', 'list_medical_detail.html')
@@ -139,15 +155,44 @@ class GetReExaminationDetail(TemplateView):
 
 def get_medical_detail_list(re_examination_id=None):
     #if re_examination_id:
-    url = 'http://127.0.0.1:8000/api/medical-detail/{}/'.format(re_examination_id)
+    url = 'http://127.0.0.1:8000/api/medical-detail/get/{}/'.format(re_examination_id)
     # else:
     #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
 
     return requests.get(url).json()
 
-def get_re_examination_detail(id):
-    url = 'http://127.0.0.1:8000/api/re-examination/'+str(id)
-    r = requests.get(url)
-    re_examination = r.json()
-    print(re_examination)
-    return re_examination
+# CALL API POST
+@csrf_exempt
+def save_medical_detail(request, re_examination_id):
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'add_medicaldetailmodel'):
+        md_form = PostMedicalDetail(request.POST)
+        if md_form.is_valid():
+            medical = md_form.cleaned_data['medical']
+            result = md_form.cleaned_data['quantity']
+            time = md_form.cleaned_data['time']
+            #appointment_date = r_form.cleaned_data['appointment_date']
+            r = requests.post('http://127.0.0.1:8000/api/medical-detail/post/{}/'.format(re_examination_id), data = {'medical':medical.id,
+                                                                                    'quantity':quantity,
+                                                                                    'time':time,
+                                                                                    're_examination_id':re_examination_id})
+            if r.status_code == 200 or 201:
+                data = r.json()
+                print(data)
+                return redirect('re_examination_list', hospital_record_id=hospital_record_id)
+        else:
+        # Added else statment
+            msg = 'Errors: %s' % r_form.errors.as_text()
+            return HttpResponse(msg, status=400)
+    else:
+        print("----------------------------")
+        md_form = PostMedicalDetail()
+
+    context =  {
+        'selected_tab': 'hospital_record',
+        'permissions': utilities.get_user_permissions(request.user),
+        're_examination_id': re_examination_id,
+        #'medical_detail_list': get_medical_detail_list(),
+        'md_form': md_form
+    }
+
+    return render(request, utilities.get_template_name(request.user, 'add_medicaldetailmodel', 'create_medical_detail.html'), context)
