@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 import requests
 from .forms import PostReExamination, PutReExamination
-from medical.forms import PostMedicalDetail
+from medical.forms import PostMedicalDetail, PutMedicalDetail
 from .serializer import ReExeminationSerializer
 from django.views.generic import TemplateView, DetailView
 from project import utilities
@@ -32,6 +32,7 @@ def get_re_examination_list(hospital_record_id):
     re_examination_list = re_examination
     return re_examination_list
 
+# CALL API GET RE-EXAMINATION DETAIL
 def get_re_examination_detail(id):
     url = 'http://127.0.0.1:8000/api/re-examination/'+str(id)
     r = requests.get(url)
@@ -149,6 +150,7 @@ class GetReExaminationDetail(TemplateView):
             'selected_tab': 'hospital_record',
             'permissions': utilities.get_user_permissions(self.request.user),
             'hospital_record_id': hospital_record_id,
+            're_examination_id':id,
             'medical_detail_list': get_medical_detail_list(id),
         }
         return context
@@ -163,36 +165,58 @@ def get_medical_detail_list(re_examination_id=None):
 
 # CALL API POST
 @csrf_exempt
-def save_medical_detail(request, re_examination_id):
-    if request.method == "POST" and utilities.is_permission_granted(request.user, 'add_medicaldetailmodel'):
+def save_medical_detail(request, hospital_record_id, id):
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'change_medicaldetailmodel'):
         md_form = PostMedicalDetail(request.POST)
         if md_form.is_valid():
             medical = md_form.cleaned_data['medical']
-            result = md_form.cleaned_data['quantity']
+            quantity = md_form.cleaned_data['quantity']
             time = md_form.cleaned_data['time']
-            #appointment_date = r_form.cleaned_data['appointment_date']
-            r = requests.post('http://127.0.0.1:8000/api/medical-detail/post/{}/'.format(re_examination_id), data = {'medical':medical.id,
+            r = requests.post('http://127.0.0.1:8000/api/medical-detail/post/{}/'.format(id), data = {'medical':medical.id,
                                                                                     'quantity':quantity,
                                                                                     'time':time,
-                                                                                    're_examination_id':re_examination_id})
+                                                                                    're_examination':id})
             if r.status_code == 200 or 201:
                 data = r.json()
                 print(data)
-                return redirect('re_examination_list', hospital_record_id=hospital_record_id)
+                return redirect('medical_detail_list', hospital_record_id=hospital_record_id, id = id)
         else:
-        # Added else statment
-            msg = 'Errors: %s' % r_form.errors.as_text()
+            msg = 'Errors: %s' % md_form.errors.as_text()
             return HttpResponse(msg, status=400)
     else:
-        print("----------------------------")
         md_form = PostMedicalDetail()
 
     context =  {
         'selected_tab': 'hospital_record',
         'permissions': utilities.get_user_permissions(request.user),
-        're_examination_id': re_examination_id,
-        #'medical_detail_list': get_medical_detail_list(),
+        're_examination': id,
         'md_form': md_form
     }
 
     return render(request, utilities.get_template_name(request.user, 'add_medicaldetailmodel', 'create_medical_detail.html'), context)
+
+# CALL API PUT
+@csrf_exempt
+def update_medical_detail(request, hospital_record_id, id):
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'update_medicaldetailmodel'):
+        md_form = PutMedicalDetail(request.POST)
+        if md_form.is_valid():
+            medical = md_form.cleaned_data['medical']
+            quantity = md_form.cleaned_data['quantity']
+            time = md_form.cleaned_data['time']
+            r = requests.put('http://127.0.0.1:8000/api/medical-detail/post/{}/'.format(id), data = {'medical':medical.id,
+                                                                                    'quantity':quantity,
+                                                                                    'time':time,
+                                                                                    're_examination':id})
+            if r.status_code == 200 or 201:
+                data = r.json()
+                print(data)
+                return redirect('medical_detail_list', hospital_record_id=hospital_record_id, id = id)
+        else:
+            msg = 'Errors: %s' % md_form.errors.as_text()
+            return HttpResponse(msg, status=400)
+    else:
+        msg = 'Method is not supported'
+        return HttpResponse(msg, status=400)
+
+    

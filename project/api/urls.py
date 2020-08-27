@@ -32,6 +32,6 @@ urlpatterns = (
     #url(r'medical-detail/re-examination/$', MedicalDetailList.as_view(), name='medical_detail_by_re_examination'),
     #url(r'medical-detail/re-examination/(?P<re_examination_id>[0-9]+)/$', MedicalDetailList.as_view(), name='medical_detail_by_re_examination'),
     url(r'medical-detail/get/(?P<re_examination_id>[0-9]+)/$', MedicalDetailGet.as_view(), name='medical_detail_get'),
-    url(r'medical-detail/post/(?P<re_examination_id>[0-9]+)/$', MedicalDetailPost.as_view(), name='medical_detail_get'),
+    url(r'medical-detail/post/(?P<re_examination_id>[0-9]+)/$', MedicalDetailPost.as_view(), name='medical_detail_post'),
 )
 urlpatterns = format_suffix_patterns(urlpatterns)

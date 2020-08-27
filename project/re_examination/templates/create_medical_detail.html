@@ -19,54 +19,11 @@
             <form class="forms-sample" method="POST">
                 {% csrf_token %}
                 {{md_form|crispy}}
-                <!-- <div id="div_id_doctor" class="form-group row"> 
-                    <label for="id_doctor" class=" requiredField col-sm-3 col-form-label">Doctor<span class="asteriskField">*</span> </label>
-                    <div class="col-sm-9"> 
-                        <input type="text" name="doctor" value="" class="numberinput form-control" required id="id_doctor" placeholder=""> </div>
-                </div>
-                <div id="div_id_result" class="form-group row"> 
-                    <label for="id_result" class=" requiredField col-sm-3 col-form-label">Result<span class="asteriskField">*</span> </label>
-                    <div class="col-sm-9"> 
-                        <input type="text" name="result" value="" class="numberinput form-control" required id="id_result" placeholder=""> </div>
-                </div>
-                <div id="div_id_date" class="form-group row"> 
-                    <label for="id_date" class=" requiredField col-sm-3 col-form-label">Date<span class="asteriskField">*</span> </label>
-                    <div class="col-sm-9"> 
-                        <input type="date" name="date" value="" class="datetimeinput form-control" required id="id_date" placeholder=""> </div>
-                </div>
-                <div id="div_id_appoinment_date" class="form-group row"> 
-                    <label for="id_appointment_date" class=" requiredField col-sm-3 col-form-label">Appointment_date<span class="asteriskField">*</span> </label>
-                    <div class="col-sm-9"> 
-                        <input type="date" name="appointment_date" value="" class="datetimeinput form-control" required id="id_appointment_date" placeholder=""> </div>
-                </div>
-
-                <div>
-                    <table class="table table-striped ">
-                        <thead>
-                            <tr>
-                                <th> Medical </th>
-                                <th> Effect </th>
-                                <th> Quantity </th>
-                                <th> Time </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for medical_detail in medical_detail_list  %}
-                                <tr>
-                                    <td> {{ medical_detail.name }} </td>
-                                    <td> {{ medical_detail.effect }} </td>
-                                    <td> 0 </td>
-                                    <td> 0 </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
 
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>
-                    <a href="{% url 're_examination_list' hospital_record_id=hospital_record_id %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>
-                </div> -->
+                    
+                </div> 
             </form>
         </div>
     </div>
