@@ -5,7 +5,7 @@ from .views import VitalSignsList, VitalSignsDetail, UserVitalSigns
 from .views import HospitalRecordList, HospitalRecordDetail, UserHospitalRecord
 from .views import ReExaminationList, ReExaminationDetail
 from .views import MedicalList, MedicalDetail
-from .views import MedicalDetailGet, MedicalDetailPost
+from .views import MedicalDetailGet, MedicalDetailPost, MedicalDetailDetail
 from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title='My API document')
 
@@ -33,5 +33,6 @@ urlpatterns = (
     #url(r'medical-detail/re-examination/(?P<re_examination_id>[0-9]+)/$', MedicalDetailList.as_view(), name='medical_detail_by_re_examination'),
     url(r'medical-detail/get/(?P<re_examination_id>[0-9]+)/$', MedicalDetailGet.as_view(), name='medical_detail_get'),
     url(r'medical-detail/post/(?P<re_examination_id>[0-9]+)/$', MedicalDetailPost.as_view(), name='medical_detail_post'),
+    url(r'medical-detail/get/(?P<re_examination_id>[0-9]+)/(?P<pk>[0-9]+)/$', MedicalDetailDetail.as_view(), name='medical_detail_post'),
 )
 urlpatterns = format_suffix_patterns(urlpatterns)

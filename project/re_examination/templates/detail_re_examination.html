@@ -37,41 +37,7 @@
                         <input type="date" name="appointment_date" value="{{re_examination.appointment_date}}" class="datetimeinput form-control" required id="id_appointment_date" placeholder=""> </div>
                 </div>
 
-                <div>
-                    <table class="table table-striped ">
-                        <thead>
-                            <tr>
-                                <th> Medical </th>
-                                <th> Effect </th>
-                                <th> Quantity </th>
-                                <th> Time </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for medical_detail in medical_detail_list  %}
-                                {% if re_examination.quantity > 0 %}
-                                    <tr>
-                                        <td> {{ medical_detail.name }} </td>
-                                        <td> {{ medical_detail.effect }} </td>
-                                        <td> {{ medical_detail.quantity }} </td>
-                                        <td> {{ medical_detail.time }} </td>
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
-
-                            {% for medical_detail in medical_detail_list  %}
-                                {% if re_examination.quantity <= 0 %}
-                                    <tr>
-                                        <td> {{ medical_detail.name }} </td>
-                                        <td> {{ medical_detail.effect }} </td>
-                                        <td> 0 </td>
-                                        <td> 0 </td>
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                
 
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-warning btn-fw col-md-4"

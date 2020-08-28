@@ -1,0 +1,50 @@
+{% extends "base_project.html" %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> Update Re-examination </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'hospital_record_list' %}">Hospital Record</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Re-examination</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="div_id_doctor" class="form-group row"> 
+                    <label for="id_doctor" class=" requiredField col-sm-3 col-form-label">Medical<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="doctor" value="{{medical_detail.medical}}" class="numberinput form-control" required id="id_doctor" placeholder=""> </div>
+                </div>
+                <div id="div_id_result" class="form-group row"> 
+                    <label for="id_result" class=" requiredField col-sm-3 col-form-label">Quantity<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="text" name="result" value="{{medical_detail.quantity}}" class="numberinput form-control" required id="id_result" placeholder=""> </div>
+                </div>
+                <div id="div_id_date" class="form-group row"> 
+                    <label for="id_date" class=" requiredField col-sm-3 col-form-label">Time<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9"> 
+                        <input type="date" name="date" value="{{medical_detail.time}}" class="datetimeinput form-control" required id="id_date" placeholder=""> </div>
+                </div>
+
+
+                
+
+                <div class="row" style="justify-content: center">
+                    <button type="submit" class="btn btn-inverse-warning btn-fw col-md-4"
+                        style="margin: 0px 20px;">Update</button>
+                    <a href="{% url 're_examination_list' hospital_record_id=hospital_record_id %}" class="btn btn-inverse-secondary btn-fw col-md-4"
+                        style="margin: 0px 20px;">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+{% endblock content %}

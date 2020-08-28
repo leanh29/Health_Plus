@@ -26,4 +26,4 @@ class MedicalDetailModel(models.Model):
         return f'{self.re_examination.appointment_date} - {self.medical.name}'
 
     def get_absolute_url(self):
-        return reverse('medical_detail_detail',kwargs={'id':self.id})
+        return reverse('medical_detail_detail',kwargs={'medical_detail_id':self.id})

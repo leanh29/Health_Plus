@@ -9,7 +9,7 @@ from .serializer import ReExeminationSerializer
 from django.views.generic import TemplateView, DetailView
 from project import utilities
 
-# -------------------------------------------------------------------------------------------------
+
 # ------------------------------------------------------RE-EXAMINATION --------------------------------------------------------------
 #CALL API GET RE-EXAMINATION LIST
 class GetReExaminationList(TemplateView):
@@ -31,14 +31,6 @@ def get_re_examination_list(hospital_record_id):
     re_examination = r.json()
     re_examination_list = re_examination
     return re_examination_list
-
-# CALL API GET RE-EXAMINATION DETAIL
-def get_re_examination_detail(id):
-    url = 'http://127.0.0.1:8000/api/re-examination/'+str(id)
-    r = requests.get(url)
-    re_examination = r.json()
-    print(re_examination)
-    return re_examination
 
 # CALL API POST
 @csrf_exempt
@@ -71,11 +63,30 @@ def save_re_examination(request, hospital_record_id):
         'selected_tab': 'hospital_record',
         'permissions': utilities.get_user_permissions(request.user),
         'hospital_record_id': hospital_record_id,
-        #'medical_detail_list': get_medical_detail_list(),
         'r_form': r_form
     }
 
     return render(request, utilities.get_template_name(request.user, 'add_reexaminationmodel', 'create_re_examination_form.html'), context)
+
+# CALL API GET RE-EXAMINATION DETAIL
+class GetReExaminationDetail(TemplateView):
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_reexaminationmodel', 'detail_re_examination.html')
+
+    def get_context_data(self, hospital_record_id, id, *args, **kwargs):
+        context = {
+            'selected_tab': 'hospital_record',
+            'permissions': utilities.get_user_permissions(self.request.user),
+            'hospital_record_id': hospital_record_id,
+            're_examination': get_re_examination_detail(id)
+        }
+        return context
+def get_re_examination_detail(id):
+    url = 'http://127.0.0.1:8000/api/re-examination/'+str(id)
+    r = requests.get(url)
+    re_examination = r.json()
+    print(re_examination)
+    return re_examination
 
 #CALL API PUT
 @csrf_exempt
@@ -141,7 +152,7 @@ def delete_re_examination(request, hospital_record_id, id):
 
 
 #CALL API GET MEDICAL DETAIL (PRESCRIPTION)
-class GetReExaminationDetail(TemplateView):
+class GetMedicalDetail(TemplateView):
     def get_template_names(self):
         return utilities.get_template_names(self.request.user, 'view_medicaldetailmodel', 'list_medical_detail.html')
 
@@ -193,7 +204,27 @@ def save_medical_detail(request, hospital_record_id, id):
         'md_form': md_form
     }
 
-    return render(request, utilities.get_template_name(request.user, 'add_medicaldetailmodel', 'create_medical_detail.html'), context)
+    return render(request, utilities.get_template_name(request.user, 'add_medicaldetailmodel', 'create_medical_detail_form.html'), context)
+
+# CALL API GET RE-EXAMINATION DETAIL
+class GetMedicalDetailDetail(TemplateView):
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_medicaldetailmodel', 'detail_medical_detail.html')
+
+    def get_context_data(self, hospital_record_id, id, medical_detail_id, *args, **kwargs):
+        context = {
+            'selected_tab': 'hospital_record',
+            'permissions': utilities.get_user_permissions(self.request.user),
+            'hospital_record_id': hospital_record_id,
+            'medical_detail': get_medical_detail_detail(id, medical_detail_id)
+        }
+        return context
+def get_medical_detail_detail(id,medical_detail_id):
+    url = 'http://127.0.0.1:8000/api/medical-detail/get/{}/{}/'.format(id,medical_detail_id)
+    r = requests.get(url)
+    medical_detail = r.json()
+    print(medical_detail)
+    return medical_detail
 
 # CALL API PUT
 @csrf_exempt
@@ -219,4 +250,15 @@ def update_medical_detail(request, hospital_record_id, id):
         msg = 'Method is not supported'
         return HttpResponse(msg, status=400)
 
-    
+#CALL API DELETE
+@csrf_exempt
+def delete_medical_detail(request, hospital_record_id, id, medical_detail_id):
+    if utilities.is_permission_granted(request.user, 'delete_reexaminationmodel'):
+        r = requests.delete('http://127.0.0.1:8000/api/re-examination/{}/{}'.format(id,medical_detail_id))
+
+        if r.status_code == 200:
+            messages.success(request, f'Delete successfully')
+            data = r.json()
+            print(data)
+
+    return redirect('medical_detail_list', hospital_record_id=hospital_record_id, id = id)

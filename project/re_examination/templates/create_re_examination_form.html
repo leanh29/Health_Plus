@@ -40,29 +40,6 @@
                         <input type="date" name="appointment_date" value="" class="datetimeinput form-control" required id="id_appointment_date" placeholder=""> </div>
                 </div>
 
-                <div>
-                    <table class="table table-striped ">
-                        <thead>
-                            <tr>
-                                <th> Medical </th>
-                                <th> Effect </th>
-                                <th> Quantity </th>
-                                <th> Time </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for medical_detail in medical_detail_list  %}
-                                <tr>
-                                    <td> {{ medical_detail.name }} </td>
-                                    <td> {{ medical_detail.effect }} </td>
-                                    <td> 0 </td>
-                                    <td> 0 </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>
                     <a href="{% url 're_examination_list' hospital_record_id=hospital_record_id %}" class="btn btn-inverse-secondary btn-fw col-md-4" style="margin: 0px 20px;">Cancel</a>

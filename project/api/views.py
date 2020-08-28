@@ -227,3 +227,10 @@ class MedicalDetailPost(generics.ListCreateAPIView):
         re_examination_id = self.kwargs['re_examination_id']
 
         return MedicalDetailModel.objects.filter(re_examination_id=re_examination_id)
+
+class MedicalDetailDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MedicalDetailModel.objects.all()
+    serializer_class = MedicalDetailSerializersPost
+
+    def perform_update(self, serializer):
+        instance = serializer.save()

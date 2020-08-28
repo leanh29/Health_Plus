@@ -30,6 +30,8 @@
               <th> Meidcical </th>
               <th> Quantity </th>
               <th> Times </th>
+              <th> Update </th>
+              <th> Delete </th>
               <!-- <th> Appointment date </th> -->
             </tr>
           </thead>
@@ -39,9 +41,37 @@
                     <td> {{ medical.name }} </td>
                     <td> {{ medical.quantity }} </td>
                     <td> {{ medical.time }} </td>
+                    <td class="{% if not 'change_medicaldetailmodel' in permissions %} d-none {% endif %}">
+                      <a class="btn btn-inverse-warning btn-fw" href="{% url 'medical_detail_detail' hospital_record_id=hospital_record_id id=re_examination_id medical_detail_id=medical.id %}" >Update</a>
+                    </td>
+                    <td class="{% if not 'delete_medicaldetailmodel' in permissions %} d-none {% endif %}">
+                      <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">
+                        Delete
+                      </button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure delete this re-examination ?
+                            </div>
+                            <!-- for {{re.hr_re_examination.disease}} -->
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-inverse-secondary btn-fw col-md-4" data-dismiss="modal">Cancle</button>
+                             
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
                 </tr>
                 {% endfor %}
-            
           </tbody>
         </table>
       </div>
