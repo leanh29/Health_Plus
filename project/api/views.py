@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser
@@ -193,16 +194,21 @@ class MedicalDetailGet(generics.ListCreateAPIView):
             m.id,
             m.name,
             m.effect,
+            md.id as medical_detail_id,
             md.quantity,
-            md.time
+            md.time,
+            re_examination_id,
+            md.medical_id
         FROM
             medical_medicalmodel m
             INNER JOIN
             (
                 SELECT
+                    id,
                     medical_id,
                     quantity,
-                    time
+                    time,
+                    re_examination_id
                 FROM
                     medical_medicaldetailmodel
                 WHERE
@@ -214,7 +220,13 @@ class MedicalDetailGet(generics.ListCreateAPIView):
         """.format(re_examination_id)
 
         print("-----------------"+sql)
+        b = {
+            'b': 123
+        }
+        a = {}
+        a = MedicalDetailModel.objects.raw(sql)
 
+        #return JsonResponse(list(a), safe = False)
         return MedicalDetailModel.objects.raw(sql)
 
 class MedicalDetailPost(generics.ListCreateAPIView):

@@ -1,4 +1,5 @@
 {% extends "base_project.html" %}
+{% load crispy_forms_tags %}
 {% block page-header %}
 <div class="page-header">
     <h3 class="page-title"> Update Re-examination </h3>
@@ -14,26 +15,24 @@
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <form method="POST" action="" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'medical_detail_update' hospital_record_id=hospital_record_id id=re_examination_id medical_detail_id=medical_detail.id %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div id="div_id_doctor" class="form-group row"> 
-                    <label for="id_doctor" class=" requiredField col-sm-3 col-form-label">Medical<span class="asteriskField">*</span> </label>
+                <!-- {{md_form|crispy}} -->
+                <!-- <div id="div_id_medical" class="form-group row"> 
+                    <label for="id_medical" class=" requiredField col-sm-3 col-form-label">Medical<span class="asteriskField">*</span> </label>
                     <div class="col-sm-9"> 
-                        <input type="text" name="doctor" value="{{medical_detail.medical}}" class="numberinput form-control" required id="id_doctor" placeholder=""> </div>
-                </div>
-                <div id="div_id_result" class="form-group row"> 
-                    <label for="id_result" class=" requiredField col-sm-3 col-form-label">Quantity<span class="asteriskField">*</span> </label>
+                        <input type="text" name="medical" value="{{medical_detail.medical}}" class="numberinput form-control" required id="id_medical" placeholder=""> </div>
+                </div> -->
+                <div id="div_id_quantity" class="form-group row"> 
+                    <label for="id_quantity" class=" requiredField col-sm-3 col-form-label">Quantity<span class="asteriskField">*</span> </label>
                     <div class="col-sm-9"> 
-                        <input type="text" name="result" value="{{medical_detail.quantity}}" class="numberinput form-control" required id="id_result" placeholder=""> </div>
+                        <input type="number" name="quantity" value="{{medical_detail.quantity}}" class="numberinput form-control" required id="id_quantity" placeholder=""> </div>
                 </div>
-                <div id="div_id_date" class="form-group row"> 
-                    <label for="id_date" class=" requiredField col-sm-3 col-form-label">Time<span class="asteriskField">*</span> </label>
+                <div id="div_id_time" class="form-group row"> 
+                    <label for="id_time" class=" requiredField col-sm-3 col-form-label">Time<span class="asteriskField">*</span> </label>
                     <div class="col-sm-9"> 
-                        <input type="date" name="date" value="{{medical_detail.time}}" class="datetimeinput form-control" required id="id_date" placeholder=""> </div>
+                        <input type="number" name="time" value="{{medical_detail.time}}" class="numberinput form-control" required id="id_time" placeholder=""> </div>
                 </div>
-
-
-                
 
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-warning btn-fw col-md-4"

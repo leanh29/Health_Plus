@@ -54,8 +54,9 @@ class MedicalDetailSerializersGet(serializers.ModelSerializer):
     # time = serializers.ReadOnlyField()
     name = serializers.ReadOnlyField()
     effect = serializers.ReadOnlyField()
-    re_examination = serializers.ReadOnlyField()
-    medical = serializers.ReadOnlyField()
+    re_examination_id = serializers.ReadOnlyField()
+    medical_id = serializers.ReadOnlyField()
+    medical_detail_id = serializers.ReadOnlyField()
 
     class Meta:
         #model = MedicalModel

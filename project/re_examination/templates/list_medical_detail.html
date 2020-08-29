@@ -36,13 +36,14 @@
             </tr>
           </thead>
           <tbody>
-                {% for medical in medical_detail_list  %}
+                {% for md in medical_detail_list  %}
                 <tr>
-                    <td> {{ medical.name }} </td>
-                    <td> {{ medical.quantity }} </td>
-                    <td> {{ medical.time }} </td>
+                    <td> {{ md.name }} </td>
+                    <td> {{ md.quantity }} </td>
+                    <td> {{ md.time }} </td>
+
                     <td class="{% if not 'change_medicaldetailmodel' in permissions %} d-none {% endif %}">
-                      <a class="btn btn-inverse-warning btn-fw" href="{% url 'medical_detail_detail' hospital_record_id=hospital_record_id id=re_examination_id medical_detail_id=medical.id %}" >Update</a>
+                      <a class="btn btn-inverse-warning btn-fw" href="{% url 'medical_detail_detail' hospital_record_id=hospital_record_id id=re_examination_id medical_detail_id=md.medical_detail_id %}" >Update</a>
                     </td>
                     <td class="{% if not 'delete_medicaldetailmodel' in permissions %} d-none {% endif %}">
                       <button type="button" class="btn btn-inverse-danger btn-fw" data-toggle="modal" data-target="#exampleModalCenter">
@@ -64,7 +65,7 @@
                             <!-- for {{re.hr_re_examination.disease}} -->
                             <div class="modal-footer">
                               <button type="button" class="btn btn-inverse-secondary btn-fw col-md-4" data-dismiss="modal">Cancle</button>
-                             
+                              <a class="btn btn-inverse-danger btn-fw " href="{% url 'medical_detail_delete' hospital_record_id=hospital_record_id id=re_examination_id medical_detail_id=md.medical_detail_id %}" >Delete</a>
                             </div>
                           </div>
                         </div>

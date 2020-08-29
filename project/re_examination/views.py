@@ -93,7 +93,6 @@ def get_re_examination_detail(id):
 def update_re_examination(request, hospital_record_id, id):
     if request.method == "POST" and utilities.is_permission_granted(request.user, 'change_reexaminationmodel'):
         r_form = PutReExamination(request.POST)
-
         if r_form.is_valid():
             doctor = r_form.cleaned_data['doctor']
             result = r_form.cleaned_data['result']
@@ -216,6 +215,7 @@ class GetMedicalDetailDetail(TemplateView):
             'selected_tab': 'hospital_record',
             'permissions': utilities.get_user_permissions(self.request.user),
             'hospital_record_id': hospital_record_id,
+            're_examination_id':id,
             'medical_detail': get_medical_detail_detail(id, medical_detail_id)
         }
         return context
@@ -228,17 +228,19 @@ def get_medical_detail_detail(id,medical_detail_id):
 
 # CALL API PUT
 @csrf_exempt
-def update_medical_detail(request, hospital_record_id, id):
-    if request.method == "POST" and utilities.is_permission_granted(request.user, 'update_medicaldetailmodel'):
+def update_medical_detail(request, hospital_record_id, id, medical_detail_id):
+    if request.method == "POST" and utilities.is_permission_granted(request.user, 'change_medicaldetailmodel'):
         md_form = PutMedicalDetail(request.POST)
         if md_form.is_valid():
-            medical = md_form.cleaned_data['medical']
+            #medical = md_form.cleaned_data['medical']
             quantity = md_form.cleaned_data['quantity']
             time = md_form.cleaned_data['time']
-            r = requests.put('http://127.0.0.1:8000/api/medical-detail/post/{}/'.format(id), data = {'medical':medical.id,
-                                                                                    'quantity':quantity,
-                                                                                    'time':time,
-                                                                                    're_examination':id})
+            print("-----------"+str(quantity)+"----------"+str(time)+"--------------"+str(medical_detail_id)+"---------"+str(id))
+            r = requests.put('http://127.0.0.1:8000/api/medical-detail/get/{}/{}/'.format(id, medical_detail_id), data = {'quantity':quantity,
+                                                                                                    'time':time,
+                                                                                                    'medical': medical_detail_id,
+                                                                                                    're_examination':id})
+            print(str(r.status_code)+"aaaaaaaaaaaa")
             if r.status_code == 200 or 201:
                 data = r.json()
                 print(data)
@@ -254,7 +256,7 @@ def update_medical_detail(request, hospital_record_id, id):
 @csrf_exempt
 def delete_medical_detail(request, hospital_record_id, id, medical_detail_id):
     if utilities.is_permission_granted(request.user, 'delete_reexaminationmodel'):
-        r = requests.delete('http://127.0.0.1:8000/api/re-examination/{}/{}'.format(id,medical_detail_id))
+        r = requests.delete('http://127.0.0.1:8000/api/medical-detail/get/{}/{}'.format(id,medical_detail_id))
 
         if r.status_code == 200:
             messages.success(request, f'Delete successfully')
