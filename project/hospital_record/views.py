@@ -28,6 +28,30 @@ def get_hospital_record_list(user_id):
     hospital_record_list = hospital_record
     return hospital_record_list
 
+#CALL API GET FILTER LIST
+class FilterHospitalRecordList(TemplateView):
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_hospitalrecordmodel', 'list_hospital_record.html')
+
+    def get_context_data(self, *args, **kwargs):
+        print("--------------")
+        context = {
+            'selected_tab': 'hospital_record',
+            'permissions': utilities.get_user_permissions(self.request.user),
+            'hospital_record' : filter_hospital_record_list(self.request.user.id, self.request),
+        }
+        print(str(self.request)+"=======================")
+        return context
+
+def filter_hospital_record_list(user_id, request):
+    disease=request.GET.get('disease')
+    print(str(disease)+"--------------")
+    url = 'http://127.0.0.1:8000/api/hospital-record/filter/{}?disease={}'.format(user_id, disease)
+    r = requests.get(url)
+    hospital_record = r.json()
+    hospital_record_list = hospital_record
+    return hospital_record_list
+
 # CALL API POST
 @csrf_exempt
 def save_hospital_record(request):

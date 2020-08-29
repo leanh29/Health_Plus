@@ -1,8 +1,8 @@
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import PhysicalList, PhysicalDetail, UserPhysical
+from .views import PhysicalList, PhysicalDetail, UserPhysical, FilterPhysical
 from .views import VitalSignsList, VitalSignsDetail, UserVitalSigns
-from .views import HospitalRecordList, HospitalRecordDetail, UserHospitalRecord
+from .views import HospitalRecordList, HospitalRecordDetail, UserHospitalRecord, FilterHospitalRecord
 from .views import ReExaminationList, ReExaminationDetail
 from .views import MedicalList, MedicalDetail
 from .views import MedicalDetailGet, MedicalDetailPost, MedicalDetailDetail
@@ -12,9 +12,10 @@ schema_view = get_swagger_view(title='My API document')
 urlpatterns = (
     url(r'^doc/', schema_view, name='swagger'),
     # #url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'physical/$', PhysicalList.as_view(), name='physical'),
+    #url(r'find$', PhysicalFilter.as_view(), name='physical'),
     url(r'physical/(?P<pk>[0-9]+)/$', PhysicalDetail.as_view(), name='physical_detail'),
     url(r'physical/user/(?P<pk>[0-9]+)/$', UserPhysical.as_view(), name='user_physical'),
+    url(r'physical/filter/(?P<pk>[0-9]+)/$', FilterPhysical.as_view(), name='physical-filter'),
 
     url(r'vital-signs/$', VitalSignsList.as_view(), name='vital_signs'),
     url(r'vital-signs/(?P<pk>[0-9]+)/$', VitalSignsDetail.as_view(), name='vital_signs_detail'),
@@ -22,7 +23,8 @@ urlpatterns = (
     
     url(r'hospital-record/$', HospitalRecordList.as_view(), name='hospital_record'),
     url(r'hospital-record/(?P<pk>[0-9]+)/$', HospitalRecordDetail.as_view(), name='hospital_record_detail'),
-    url(r'hospital-record/user/(?P<pk>[0-9]+)/$', UserHospitalRecord.as_view(), name="user_hospital"),
+    url(r'hospital-record/user/(?P<pk>[0-9]+)/$', UserHospitalRecord.as_view(), name="user_hospital_record"),
+    url(r'hospital-record/filter/(?P<pk>[0-9]+)/$', FilterHospitalRecord.as_view(), name="hospital_record_filter"),
 
     url(r're-examination/hospital_record/(?P<hospital_record_id>[0-9]+)/$', ReExaminationList.as_view(), name='re_examination'),
     url(r're-examination/(?P<pk>[0-9]+)/$', ReExaminationDetail.as_view(), name='re_examination_detail'),

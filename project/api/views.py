@@ -4,6 +4,7 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import generics, status
 from rest_framework.response import Response
+#from rest_framework import filters
 #from django_filters import rest_framework as filters
 from django.contrib.auth.models import User
 from physical.models import PhysicalModel
@@ -36,6 +37,15 @@ class UserPhysical(generics.ListCreateAPIView):
         user_id = self.kwargs['pk']
 
         return PhysicalModel.objects.filter(user_id=user_id)
+
+class FilterPhysical(generics.ListCreateAPIView):
+    serializer_class = PhysicalSerializers
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+        height = self.request.query_params.get('height', None)
+
+        return PhysicalModel.objects.filter(user_id=user_id, height=height)
 
 # API FOR VITAL SIGNS
 class VitalSignsList(generics.ListCreateAPIView):
@@ -86,6 +96,15 @@ class UserHospitalRecord(generics.ListCreateAPIView):
 
         return HospitalRecordModel.objects.filter(user_id=user_id)
 
+class FilterHospitalRecord(generics.ListCreateAPIView):
+    serializer_class = HospitalRecordSerializers
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+        disease = self.request.query_params.get('disease', None)
+
+        return HospitalRecordModel.objects.filter(user_id=user_id, disease=disease)
+
 
 # ----------------------------------------------------API FOR RE EXAMINATION------------------------------
 class ReExaminationList(generics.ListCreateAPIView):
@@ -121,65 +140,7 @@ class MedicalDetail(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         instance = serializer.save()
 
-# API FOR MEDICAL DETAIL
-# class MedicalDetailListtt(generics.ListCreateAPIView):
-#     serializer_class = MedicalDetailSerializers
-
-#     def perform_create(self, serializer):
-#         serializer.save()
-
-#     def get_queryset(self, re_examination_id=12):
-#         if re_examination_id:
-#             print("-----------------"+str(re_examination_id))
-#             sql ="""
-#             SELECT
-#                 m.id,
-#                 m.name,
-#                 m.effect,
-#                 md.quantity,
-#                 md.time
-#             FROM
-#                 medical_medicalmodel m
-#                 LEFT JOIN
-#                 (
-#                     SELECT
-#                         medical_id,
-#                         quantity,
-#                         time
-#                     FROM
-#                         medical_medicaldetailmodel
-#                     WHERE
-#                         re_examination_id = {}
-#                 ) md
-#                 ON m.id = md.medical_id
-#             ORDER BY
-#                 m.name
-#             """.format(re_examination_id)
-#         else:
-#             print("---------------sssssssss--"+str(re_examination_id))
-#             sql = """
-#                 SELECT
-#                     id,
-#                     name,
-#                     effect,
-#                     0 as quantity,
-#                     0 as time
-#                 FROM
-#                     medical_medicalmodel
-#                 ORDER BY
-#                     name
-#             """
-
-#         return MedicalModel.objects.raw(sql)
-
 class MedicalDetailGet(generics.ListCreateAPIView):
-    # serializer_class = MedicalDetailSerializers
-
-    # def get_queryset(self):
-    #     re_examination_id = self.kwargs['re_examination_id']
-
-    #     return MedicalDetailModel.objects.filter(re_examination_id=re_examination_id)
-
     serializer_class = MedicalDetailSerializersGet
 
     def perform_create(self, serializer):

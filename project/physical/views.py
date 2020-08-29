@@ -28,6 +28,27 @@ def get_physical_list(user_id):
     physical_list = physical
     return physical_list
 
+#CALL API FILLTER PHYSICAL
+class FilterPhysicalList(TemplateView):
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_physicalmodel', 'list_physical.html')
+
+    def get_context_data(self, *args, **kwargs):
+        context = {
+            'selected_tab': 'physical',
+            'permissions': utilities.get_user_permissions(self.request.user),
+            'physical' : filter_physical_list(self.request.user.id, self.request),
+        }
+        return context
+
+def filter_physical_list(user_id, request):
+    height=request.GET.get('height')
+    url = 'http://127.0.0.1:8000/api/physical/filter/{}?height={}'.format(user_id, height)
+    r = requests.get(url)
+    physical = r.json()
+    physical_list = physical
+    return physical_list
+
 # CALL API POST
 @csrf_exempt
 def save_physical(request):

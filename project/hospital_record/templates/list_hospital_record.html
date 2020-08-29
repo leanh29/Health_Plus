@@ -1,5 +1,19 @@
 {% extends "base_project.html" %}
+{% load crispy_forms_tags %}
 {% load static %}
+{% block search_form %}
+<div class="search-field d-none d-md-block">
+  <form class="d-flex align-items-center h-100" action="{% url 'hospital_record_filter' %}" >
+    {% csrf_token %}
+    <div class="input-group" id="diease">
+      <div class="input-group-prepend bg-transparent">
+        <i class="input-group-text border-0 mdi mdi-magnify"></i>
+      </div>
+      <input type="text" class="form-control bg-transparent border-0" id="disease" name="disease" placeholder="Search Disease">
+    </div>
+  </form>
+</div>
+{% endblock search_form %}
 {% block page-header %}
 <div class="page-header">
     <h3 class="page-title"> Hospital Record List </h3>
