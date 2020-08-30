@@ -25,5 +25,9 @@ class MedicalDetailModel(models.Model):
     def __str__(self):
         return f'{self.re_examination.appointment_date} - {self.medical.name}'
 
+    class Meta:
+        unique_together = (('re_examination', 'medical'),)
+        ordering = ['-medical']
+
     def get_absolute_url(self):
         return reverse('medical_detail_detail',kwargs={'id':self.id})

@@ -9,14 +9,16 @@
       <div class="input-group-prepend bg-transparent">
         <i class="input-group-text border-0 mdi mdi-magnify"></i>
       </div>
-      <input type="text" class="form-control bg-transparent border-0" id="height" name="height" placeholder="Search projects">
+      <input type="text" class="form-control bg-transparent border-0" id="height" name="height" placeholder="Search height">
     </div>
   </form>
 </div>
 {% endblock search_form %}
 {% block page-header %}
 <div class="page-header">
-    <h3 class="page-title"> Physical List </h3>
+    <h3 class="page-title"> <span class="page-title-icon bg-gradient-primary text-white mr-2">
+      <i class="mdi mdi-google-physical-web"></i>
+    </span> Physical </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item active"><a href="{% url 'physical_list' %}">Physical</a></li>

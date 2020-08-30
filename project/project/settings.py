@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'hospital_record.apps.HospitalRecordConfig',
     're_examination.apps.ReExaminationConfig',
     'medical.apps.MedicalConfig',
+    'news.apps.NewsConfig',
     'crispy_forms',
     'widget_tweaks',
     'django.contrib.admin',

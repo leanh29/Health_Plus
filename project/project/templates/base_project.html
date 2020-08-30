@@ -59,59 +59,6 @@
                 <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
               </a>
             </li>
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                <i class="mdi mdi-email-outline"></i>
-                <span class="count-symbol bg-warning"></span>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                <i class="mdi mdi-bell-outline"></i>
-                <span class="count-symbol bg-danger"></span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                <h6 class="p-3 mb-0">Notifications</h6>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-success">
-                      <i class="mdi mdi-calendar"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
-                    <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-warning">
-                      <i class="mdi mdi-settings"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
-                    <p class="text-gray ellipsis mb-0"> Update dashboard </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-info">
-                      <i class="mdi mdi-link-variant"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
-                    <p class="text-gray ellipsis mb-0"> New admin wow! </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <h6 class="p-3 mb-0 text-center">See all notifications</h6>
-              </div>
-            </li> -->
             <li class="nav-item nav-settings d-none d-lg-block">
               <a class="nav-link" href="#">
                 <i class="mdi mdi-format-line-spacing"></i>
@@ -161,7 +108,7 @@
                 <a class="nav-link" href="{% url 'vital_signs_list' %}" >
                   <span class="menu-title">Vital Signs</span>
                   <!-- <i class="menu-arrow"></i> -->
-                  <i class="mdi mdi-google-physical-web menu-icon"></i>
+                  <i class="mdi mdi-adjust menu-icon"></i>
                 </a>
               </li>
             {% endif %}
@@ -169,7 +116,7 @@
               <li class="nav-item {% if selected_tab == 'hospital_record' %} active {% endif %}">
                 <a class="nav-link" href="{% url 'hospital_record_list' %}" >
                   <span class="menu-title">Hospital Record</span>
-                  <i class="mdi mdi-google-physical-web menu-icon"></i>
+                  <i class="mdi mdi-animation menu-icon"></i>
                 </a>
               </li>
             {% endif %}
@@ -177,33 +124,17 @@
               <li class="nav-item {% if selected_tab == 'medical' %} active {% endif %}">
                 <a class="nav-link" href="{% url 'medical_list' %}" >
                   <span class="menu-title">Medical</span>
-                  <i class="mdi mdi-google-physical-web menu-icon"></i>
+                  <i class="mdi mdi-flask-outline menu-icon"></i>
                 </a>
               </li>
             {% endif %}
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
-                <span class="menu-title">Sample Pages</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-medical-bag menu-icon"></i>
-              </a>
-              <div class="collapse" id="general-pages">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                </ul>
-              </div>
-            </li>
             <li class="nav-item sidebar-actions">
               <span class="nav-link">
                 <div class="border-bottom">
-                  <h6 class="font-weight-normal mb-3">Projects</h6>
+                  <h6 class="font-weight-normal mb-3">Hotline Coronavirus</h6>
                 </div>
-                <button class="btn btn-block btn-lg btn-gradient-primary mt-4">+ Add a project</button>
-                <div class="mt-4">
+                <button class="btn btn-block btn-lg btn-gradient-primary mt-4"> 19009095</button>
+                <!-- <div class="mt-4">
                   <div class="border-bottom">
                     <p class="text-secondary">Categories</p>
                   </div>
@@ -211,7 +142,24 @@
                     <li>Free</li>
                     <li>Pro</li>
                   </ul>
-                </div>
+                </div> -->
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
+                    <span class="menu-title">Hospital Hotline</span>
+                    <i class="menu-arrow"></i>
+                    <i class="mdi mdi-medical-bag menu-icon"></i>
+                  </a>
+                  <div class="collapse" id="general-pages">
+                    <ul class="nav flex-column sub-menu">
+                      <li class="nav-item"> <a class="nav-link" href="#"> Bach Mai: 0969851616 </a></li>
+                      <li class="nav-item"> <a class="nav-link" href="#"> Nhi Tr.Uong: 0372884712 </a></li>
+                      <li class="nav-item"> <a class="nav-link" href="#"> Phoi Tr.Uong: 0967941616 </a></li>
+                      <li class="nav-item"> <a class="nav-link" href="#"> Vinmec HN: 0934472768 </a></li>
+                      <li class="nav-item"> <a class="nav-link" href="p#"> Nhi Dong 1: 0913117965 </a></li>
+                      
+                    </ul>
+                  </div>
+                </li>
               </span>
             </li>
           </ul>
@@ -219,7 +167,7 @@
         <!-- partial -->
         <div class="main-panel" >
           <div class="content-wrapper">
-            <div class="row" id="proBanner">
+            <div class="row d-none" id="proBanner">
               <div class="col-12">
                 <span class="d-flex align-items-center purchase-popup">
                   <p>Like what you see? Check out our premium version for more.</p>

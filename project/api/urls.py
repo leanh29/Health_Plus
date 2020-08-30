@@ -6,6 +6,7 @@ from .views import HospitalRecordList, HospitalRecordDetail, UserHospitalRecord,
 from .views import ReExaminationList, ReExaminationDetail
 from .views import MedicalList, MedicalDetail
 from .views import MedicalDetailGet, MedicalDetailPost, MedicalDetailDetail
+from .views import NewsList
 from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title='My API document')
 
@@ -13,6 +14,10 @@ urlpatterns = (
     url(r'^doc/', schema_view, name='swagger'),
     # #url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
     #url(r'find$', PhysicalFilter.as_view(), name='physical'),
+
+    url(r'news/$', NewsList.as_view(), name='news_list'),
+
+    url(r'physical/$', PhysicalList.as_view(), name='physical'),
     url(r'physical/(?P<pk>[0-9]+)/$', PhysicalDetail.as_view(), name='physical_detail'),
     url(r'physical/user/(?P<pk>[0-9]+)/$', UserPhysical.as_view(), name='user_physical'),
     url(r'physical/filter/(?P<pk>[0-9]+)/$', FilterPhysical.as_view(), name='physical-filter'),

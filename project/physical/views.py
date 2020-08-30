@@ -26,6 +26,7 @@ def get_physical_list(user_id):
     r = requests.get(url)
     physical = r.json()
     physical_list = physical
+    print(physical_list)
     return physical_list
 
 #CALL API FILLTER PHYSICAL
@@ -134,3 +135,5 @@ def delete_physical(request, id):
             print(data)
 
     return redirect('physical_list')
+
+

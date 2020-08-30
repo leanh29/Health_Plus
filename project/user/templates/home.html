@@ -14,46 +14,53 @@
       </ul>
     </nav>
   </div>
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class=" bg-gradient-primary text-white mr-2">
+      </span> Coronavirus In Viet Nam </h3>
+</div>
 {% endblock page-header %}
 
-{% block content %}
-  
+{% block content %}  
+{% for news in news  %}
 {% block page_content_1 %}
 <div class="row">
-    <div class="col-md-4 stretch-card grid-margin">
-      <div class="card bg-gradient-danger card-img-holder text-white">
-        <div class="card-body">
-          <img src="{% static 'template/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-          </h4>
-          <h2 class="mb-5">$ 15,0000</h2>
-          <h6 class="card-text">Increased by 60%</h6>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 stretch-card grid-margin">
-      <div class="card bg-gradient-info card-img-holder text-white">
-        <div class="card-body">
-          <img src="{% static 'template/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Weekly Orders <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-          </h4>
-          <h2 class="mb-5">45,6334</h2>
-          <h6 class="card-text">Decreased by 10%</h6>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 stretch-card grid-margin">
-      <div class="card bg-gradient-success card-img-holder text-white">
-        <div class="card-body">
-          <img src="{% static 'template/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Visitors Online <i class="mdi mdi-diamond mdi-24px float-right"></i>
-          </h4>
-          <h2 class="mb-5">95,5741</h2>
-          <h6 class="card-text">Increased by 5%</h6>
-        </div>
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-info card-img-holder text-white">
+      <div class="card-body">
+        <img src="{% static 'template/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
+        <h4 class="font-weight-normal mb-3">Coronavirus Cases <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">{{news.case_vn}}</h2>
+        <h6 class="card-text">Update: 8.00 {{news.date}}</h6>
       </div>
     </div>
   </div>
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-danger card-img-holder text-white">
+      <div class="card-body">
+        <img src="{% static 'template/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
+        <h4 class="font-weight-normal mb-3">Deaths <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">{{news.death_vn}}</h2>
+        <h6 class="card-text">Update: 8.00 {{news.date}}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-success card-img-holder text-white">
+      <div class="card-body">
+        <img src="{% static 'template/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
+        <h4 class="font-weight-normal mb-3">Recovered <i class="mdi mdi-diamond mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">{{news.recoverd_vn}}</h2>
+        <h6 class="card-text">Update: 8.00 {{news.date}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 {% endblock page_content_1 %}
 
 {% block page_content_2 %}
@@ -62,7 +69,7 @@
       <div class="card">
         <div class="card-body">
           <div class="clearfix">
-            <h4 class="card-title float-left">Visit And Sales Statistics</h4>
+            <h4 class="card-title float-left">Your Physical Chart</h4>
             <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
           </div>
           <canvas id="visit-sale-chart" class="mt-4"></canvas>
@@ -72,16 +79,42 @@
     <div class="col-md-5 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Traffic Sources</h4>
+          <h4 class="card-title">Coronavirus In The World</h4>
           <canvas id="traffic-chart"></canvas>
           <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
+          <div class="d-none">
+            <p id="case_w">{{news.case_w}}</p>
+            <p id="death_w">{{news.death_w}}</p>
+            <p id="recoverd_w">{{news.recoverd_w}}</p>
+          </div>
+          
         </div>
       </div>
     </div>
   </div>
+  <table class="table table-striped d-none " id="mytable">
+    <thead>
+      <tr>
+        <th> Date </th>
+        <th> Height (cm) </th>
+        <th> Weight (kg) </th>
+      </tr>
+    </thead>
+    <tbody>
+          {% for phy in physical  %}
+          <tr>
+              <td> {{ phy.date }} </td>
+              <td> {{ phy.height }} </td>
+              <td> {{ phy.weight }} </td>
+          </tr>
+          {% endfor %}
+      
+    </tbody>
+  </table>
 {% endblock page_content_2 %}
+{% endfor %}
 
-{% block page_content_3 %}
+<!-- {% block page_content_3 %}
 <div class="row">
     <div class="col-12 grid-margin">
       <div class="card">
@@ -146,7 +179,7 @@
       </div>
     </div>
   </div>
-{% endblock page_content_3 %}
+{% endblock page_content_3 %} -->
 
 {% block page_content_4 %}
 <div class="row">

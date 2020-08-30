@@ -220,10 +220,26 @@
       gradientStrokeRed.addColorStop(1, 'rgba(254, 112, 150, 1)');
       var gradientLegendRed = 'linear-gradient(to right, rgba(255, 191, 150, 1), rgba(254, 112, 150, 1))';
 
+      var date = [];
+      var height = [];
+      var weight = [];
+      var myTab = document.getElementById('mytable');
+        for (i = 1; i < myTab.rows.length; i++) {
+            var objCells = myTab.rows.item(i).cells;
+            date.push(objCells.item(1))
+            height.push(objCells.item(2))
+            weight.push(objCells.item(3))
+            // for (var j = 0; j < objCells.length; j++) {
+            //     alert(objCells.item(j).innerHTML)
+            // }
+        }
+      console.log(date)
+
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
+            //labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
+            labels: date,
             datasets: [
               {
                 label: "CHN",
@@ -235,7 +251,8 @@
                 fill: false,
                 borderWidth: 1,
                 fill: 'origin',
-                data: [20, 40, 15, 35, 25, 50, 30, 20]
+                //data: [20, 40, 15, 35, 25, 50, 30, 20]
+                data: height
               },
               {
                 label: "USA",
@@ -247,7 +264,8 @@
                 fill: false,
                 borderWidth: 1,
                 fill: 'origin',
-                data: [40, 30, 20, 10, 50, 15, 35, 40]
+                //data: [40, 30, 20, 10, 50, 15, 35, 40]
+                data: weight
               },
               {
                 label: "UK",
@@ -339,10 +357,25 @@
       gradientStrokeRed.addColorStop(1, 'rgba(254, 112, 150, 1)');
       var gradientLegendRed = 'linear-gradient(to right, rgba(255, 191, 150, 1), rgba(254, 112, 150, 1))';
 
+      var date = [];
+      var height = [];
+      var weight = [];
+      var myTab = document.getElementById('mytable');
+        for (i = 1; i < myTab.rows.length; i++) {
+            var objCells = myTab.rows.item(i).cells;
+            date.push(objCells.item(1))
+            height.push(objCells.item(2))
+            weight.push(objCells.item(3))
+            // for (var j = 0; j < objCells.length; j++) {
+            //     alert(objCells.item(j).innerHTML)
+            // }
+        }
+
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
+            //labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
+            labels: date,
             datasets: [
               {
                 label: "CHN",
@@ -354,7 +387,8 @@
                 fill: false,
                 borderWidth: 1,
                 fill: 'origin',
-                data: [20, 40, 15, 35, 25, 50, 30, 20]
+                //data: [20, 40, 15, 35, 25, 50, 30, 20]
+                data: height
               },
               {
                 label: "USA",
@@ -366,7 +400,8 @@
                 fill: false,
                 borderWidth: 1,
                 fill: 'origin',
-                data: [40, 30, 20, 10, 50, 15, 35, 40]
+                //data: [40, 30, 20, 10, 50, 15, 35, 40]
+                data: weight
               },
               {
                 label: "UK",
@@ -453,11 +488,19 @@
       var gradientStrokeGreen = ctx.createLinearGradient(0, 0, 0, 300);
       gradientStrokeGreen.addColorStop(0, 'rgba(6, 185, 157, 1)');
       gradientStrokeGreen.addColorStop(1, 'rgba(132, 217, 210, 1)');
-      var gradientLegendGreen = 'linear-gradient(to right, rgba(6, 185, 157, 1), rgba(132, 217, 210, 1))';      
+      var gradientLegendGreen = 'linear-gradient(to right, rgba(6, 185, 157, 1), rgba(132, 217, 210, 1))';
+
+      var data_w = []
+      var case_w = document.getElementById('case_w').innerHTML;
+      data_w.push(case_w)
+      var death = document.getElementById('death_w').innerHTML;
+      data_w.push(death)
+      var recoverd = document.getElementById('recoverd_w').innerHTML;
+      data_w.push(recoverd)
 
       var trafficChartData = {
         datasets: [{
-          data: [30, 30, 40],
+          data: data_w,
           backgroundColor: [
             gradientStrokeBlue,
             gradientStrokeGreen,

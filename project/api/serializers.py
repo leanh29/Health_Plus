@@ -4,6 +4,7 @@ from vital_signs.models import VitalSignsModel
 from hospital_record.models import HospitalRecordModel
 from re_examination.models import ReExaminationModel
 from medical.models import MedicalModel, MedicalDetailModel
+from news.models import NewsModel
 from user.models import User
 
 # PHYSICAL 
@@ -90,4 +91,10 @@ class MedicalDetailSerializersPost(serializers.ModelSerializer):
     class Meta:
         #model = MedicalModel
         model = MedicalDetailModel
+        fields = '__all__'
+
+# USER
+class NewsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = NewsModel
         fields = '__all__'

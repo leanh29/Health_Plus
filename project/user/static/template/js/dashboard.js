@@ -220,25 +220,67 @@
       gradientStrokeRed.addColorStop(1, 'rgba(254, 112, 150, 1)');
       var gradientLegendRed = 'linear-gradient(to right, rgba(255, 191, 150, 1), rgba(254, 112, 150, 1))';
 
+      var date1 = [];
+      var height1 = [];
+      var weight1 = [];
+      var date = [];
+      var height = [];
+      var weight = [];
+      var myTab = document.getElementById('mytable');
+      var i;
+      for (i = 1; i < myTab.rows.length; i++) {
+          var objCells = myTab.rows.item(i).cells;
+          date1.push(objCells.item(0))
+          height1.push(objCells.item(1))
+          weight1.push(objCells.item(2)) 
+          for (var j = 0; j < objCells.length; j++) {
+            if (j==0) {
+              date1.push(objCells.item(j).innerHTML)
+            }
+            if (j==1) {
+              height1.push(objCells.item(j).innerHTML)
+            }
+            if (j==2) {
+              weight1.push(objCells.item(j).innerHTML)
+            }
+          }
+      }
+      for (var k = 0; k< date1.length; k++){
+        if (k%2 ==1 & k<20) {
+          date.push(date1[k])
+        }
+      }
+      for (var k = 0; k< weight1.length; k++){
+        if (k%2 ==1 & k<20) {
+          weight.push(weight1[k])
+        }
+      }
+      for (var k = 0; k< height1.length; k++){
+        if (k%2 ==1 & k<20) {
+          height.push(height1[k])
+        }
+      }
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
+            //labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
+            labels: date,
             datasets: [
+              // {
+              //   label: "CHN",
+              //   borderColor: gradientStrokeViolet,
+              //   backgroundColor: gradientStrokeViolet,
+              //   hoverBackgroundColor: gradientStrokeViolet,
+              //   legendColor: gradientLegendViolet,
+              //   pointRadius: 0,
+              //   fill: false,
+              //   borderWidth: 1,
+              //   fill: 'origin',
+              //   //data: [20, 40, 15, 35, 25, 50, 30, 20]
+              //   data: height
+              // },
               {
-                label: "CHN",
-                borderColor: gradientStrokeViolet,
-                backgroundColor: gradientStrokeViolet,
-                hoverBackgroundColor: gradientStrokeViolet,
-                legendColor: gradientLegendViolet,
-                pointRadius: 0,
-                fill: false,
-                borderWidth: 1,
-                fill: 'origin',
-                data: [20, 40, 15, 35, 25, 50, 30, 20]
-              },
-              {
-                label: "USA",
+                label: "Height",
                 borderColor: gradientStrokeRed,
                 backgroundColor: gradientStrokeRed,
                 hoverBackgroundColor: gradientStrokeRed,
@@ -247,10 +289,11 @@
                 fill: false,
                 borderWidth: 1,
                 fill: 'origin',
-                data: [40, 30, 20, 10, 50, 15, 35, 40]
+                //data: [40, 30, 20, 10, 50, 15, 35, 40]
+                data: height
               },
               {
-                label: "UK",
+                label: "Weight",
                 borderColor: gradientStrokeBlue,
                 backgroundColor: gradientStrokeBlue,
                 hoverBackgroundColor: gradientStrokeBlue,
@@ -259,7 +302,8 @@
                 fill: false,
                 borderWidth: 1,
                 fill: 'origin',
-                data: [70, 10, 30, 40, 25, 50, 15, 30]
+                //data: [70, 10, 30, 40, 25, 50, 15, 30]
+                data: weight
               }
           ]
         },
@@ -339,25 +383,68 @@
       gradientStrokeRed.addColorStop(1, 'rgba(254, 112, 150, 1)');
       var gradientLegendRed = 'linear-gradient(to right, rgba(255, 191, 150, 1), rgba(254, 112, 150, 1))';
 
+      var date1 = [];
+      var height1 = [];
+      var weight1 = [];
+      var date = [];
+      var height = [];
+      var weight = [];
+      var myTab = document.getElementById('mytable');
+      var i;
+      for (i = 1; i < myTab.rows.length; i++) {
+          var objCells = myTab.rows.item(i).cells;
+          date1.push(objCells.item(0))
+          height1.push(objCells.item(1))
+          weight1.push(objCells.item(2)) 
+          for (var j = 0; j < objCells.length; j++) {
+            if (j==0) {
+              date1.push(objCells.item(j).innerHTML)
+            }
+            if (j==1) {
+              height1.push(objCells.item(j).innerHTML)
+            }
+            if (j==2) {
+              weight1.push(objCells.item(j).innerHTML)
+            }
+          }
+      }
+      for (var k = 0; k< date1.length; k++){
+        if (k%2 ==1 & k<20) {
+          date.push(date1[k])
+        }
+      }
+      for (var k = 0; k< weight1.length; k++){
+        if (k%2 ==1 & k<20) {
+          weight.push(weight1[k])
+        }
+      }
+      for (var k = 0; k< height1.length; k++){
+        if (k%2 ==1 & k<20) {
+          height.push(height1[k])
+        }
+      }
+
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
+            //labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
+            labels: date,
             datasets: [
+              // {
+              //   label: "CHN",
+              //   borderColor: gradientStrokeViolet,
+              //   backgroundColor: gradientStrokeViolet,
+              //   hoverBackgroundColor: gradientStrokeViolet,
+              //   legendColor: gradientLegendViolet,
+              //   pointRadius: 0,
+              //   fill: false,
+              //   borderWidth: 1,
+              //   fill: 'origin',
+              //   //data: [20, 40, 15, 35, 25, 50, 30, 20]
+              //   data: height
+              // },
               {
-                label: "CHN",
-                borderColor: gradientStrokeViolet,
-                backgroundColor: gradientStrokeViolet,
-                hoverBackgroundColor: gradientStrokeViolet,
-                legendColor: gradientLegendViolet,
-                pointRadius: 0,
-                fill: false,
-                borderWidth: 1,
-                fill: 'origin',
-                data: [20, 40, 15, 35, 25, 50, 30, 20]
-              },
-              {
-                label: "USA",
+                label: "Height",
                 borderColor: gradientStrokeRed,
                 backgroundColor: gradientStrokeRed,
                 hoverBackgroundColor: gradientStrokeRed,
@@ -366,10 +453,11 @@
                 fill: false,
                 borderWidth: 1,
                 fill: 'origin',
-                data: [40, 30, 20, 10, 50, 15, 35, 40]
+                //data: [40, 30, 20, 10, 50, 15, 35, 40]
+                data: weight
               },
               {
-                label: "UK",
+                label: "Weight",
                 borderColor: gradientStrokeBlue,
                 backgroundColor: gradientStrokeBlue,
                 hoverBackgroundColor: gradientStrokeBlue,
@@ -453,38 +541,49 @@
       var gradientStrokeGreen = ctx.createLinearGradient(0, 0, 0, 300);
       gradientStrokeGreen.addColorStop(0, 'rgba(6, 185, 157, 1)');
       gradientStrokeGreen.addColorStop(1, 'rgba(132, 217, 210, 1)');
-      var gradientLegendGreen = 'linear-gradient(to right, rgba(6, 185, 157, 1), rgba(132, 217, 210, 1))';      
+      var gradientLegendGreen = 'linear-gradient(to right, rgba(6, 185, 157, 1), rgba(132, 217, 210, 1))';
+
+      var data_w = []
+      var case_w = document.getElementById('case_w').innerHTML;
+      data_w.push(case_w)
+      var death = document.getElementById('death_w').innerHTML;
+      data_w.push(death)
+      var recoverd = document.getElementById('recoverd_w').innerHTML;
+      data_w.push(recoverd)
+
+      console.log(data_w)
 
       var trafficChartData = {
         datasets: [{
-          data: [30, 30, 40],
+          data: data_w,
           backgroundColor: [
             gradientStrokeBlue,
-            gradientStrokeGreen,
-            gradientStrokeRed
+            gradientStrokeRed,
+            gradientStrokeGreen
+            
           ],
           hoverBackgroundColor: [
             gradientStrokeBlue,
-            gradientStrokeGreen,
-            gradientStrokeRed
+            gradientStrokeRed,
+            gradientStrokeGreen
           ],
           borderColor: [
             gradientStrokeBlue,
-            gradientStrokeGreen,
-            gradientStrokeRed
+            gradientStrokeRed,
+            gradientStrokeGreen
           ],
           legendColor: [
             gradientLegendBlue,
-            gradientLegendGreen,
-            gradientLegendRed
+            gradientLegendRed,
+            gradientLegendGreen
           ]
         }],
     
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'Search Engines',
-          'Direct Click',
-          'Bookmarks Click',
+          'Coronavirus Cases',
+          'Deaths Cases',
+          'Recoverd Cases',
         ]
       };
       var trafficChartOptions = {

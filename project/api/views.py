@@ -1,4 +1,6 @@
 import json
+import datetime
+import dateutil.parser
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser
@@ -12,7 +14,8 @@ from vital_signs.models import VitalSignsModel
 from hospital_record.models import HospitalRecordModel
 from re_examination.models import ReExaminationModel
 from medical.models import MedicalModel, MedicalDetailModel
-from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers, ReExaminationSerializers, MedicalSerializers, MedicalDetailSerializersGet, MedicalDetailSerializersPost
+from news.models import NewsModel
+from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers, ReExaminationSerializers, MedicalSerializers, MedicalDetailSerializersGet, MedicalDetailSerializersPost, NewsSerializers
 
 
 # API FOR PHYSICAL
@@ -44,6 +47,8 @@ class FilterPhysical(generics.ListCreateAPIView):
     def get_queryset(self):
         user_id = self.kwargs['pk']
         height = self.request.query_params.get('height', None)
+        a = PhysicalModel.objects.filter(user_id=user_id, height=height)
+        print(str(user_id)+str(height))
 
         return PhysicalModel.objects.filter(user_id=user_id, height=height)
 
@@ -207,3 +212,12 @@ class MedicalDetailDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         instance = serializer.save()
+
+# API FOR PHYSICAL
+class NewsList(generics.ListCreateAPIView):
+    serializer_class = NewsSerializers
+
+    def get_queryset(self):
+        date_filter = datetime.date.today()
+
+        return NewsModel.objects.filter(date=date_filter)

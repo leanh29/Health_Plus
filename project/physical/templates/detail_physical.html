@@ -1,11 +1,13 @@
 {% extends "base_project.html" %}
 {% block page-header %}
 <div class="page-header">
-    <h3 class="page-title"> Update Physical </h3>
+    <h3 class="page-title"> <span class="page-title-icon bg-gradient-primary text-white mr-2">
+      <i class="mdi mdi-google-physical-web"></i>
+    </span> Physical </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'physical_list' %}">Physical</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Update Physical</li>
+            <li class="breadcrumb-item active"><a href="{% url 'physical_list' %}">Physical</a></li>
+            <li class="breadcrumb-item " aria-current="page">Physical List</li>
         </ol>
     </nav>
 </div>

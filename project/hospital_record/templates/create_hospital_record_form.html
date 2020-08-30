@@ -3,11 +3,13 @@
 {% load static %}
 {% block page-header %}
 <div class="page-header">
-    <h3 class="page-title"> New Hospital Record </h3>
+    <h3 class="page-title"> <span class="page-title-icon bg-gradient-primary text-white mr-2">
+      <i class="mdi mdi-animation"></i>
+    </span> Hospital Record </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'hospital_record_list' %}">Hospital Record</a></li>
-            <li class="breadcrumb-item active" aria-current="page">New Hospital Record</li>
+            <li class="breadcrumb-item active" aria-current="page">Hospital Record List</li>
         </ol>
     </nav>
 </div>
