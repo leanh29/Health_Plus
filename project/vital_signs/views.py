@@ -28,8 +28,13 @@ def get_vital_signs_list(user_id):
     vital_signs = r.json()
     vital_signs_list = vital_signs
 
-    for vital_signs in vital_signs_list:
+    for vital_signs in vital_signs_list['results']:
         vital_signs['time'] = dateutil.parser.parse(vital_signs['time']).strftime("%Y-%m-%d %H:%M")
+        #print(vital_signs)
+    
+    print("---------------------")
+
+    #print(vital_signs_list['results'])
 
     return vital_signs_list
 

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, Group
 
 
 def get_user_permissions(user):
@@ -8,6 +8,11 @@ def get_user_permissions(user):
         permissions = user.user_permissions.all() | Permission.objects.filter(group__user=user)
 
     return [permission.codename for permission in permissions]
+
+def get_user_group(user):
+    group = user.groups.all()
+
+    return group
 
 
 def is_permission_granted(user, permission):

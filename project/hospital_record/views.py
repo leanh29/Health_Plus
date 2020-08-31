@@ -14,15 +14,33 @@ class GetHospitalRecordList(TemplateView):
         return utilities.get_template_names(self.request.user, 'view_hospitalrecordmodel', 'list_hospital_record.html')
 
     def get_context_data(self, *args, **kwargs):
-        context = {
-            'selected_tab': 'hospital_record',
-            'permissions': utilities.get_user_permissions(self.request.user),
-            'hospital_record' : get_hospital_record_list(self.request.user.id),
-        }
+        group = utilities.get_user_group(self.request.user)
+        for gr in group:
+            if str(gr)=='Doctor':
+                print("okkkkkkkkkkkkkkkkkkkkkkk")
+                context = {
+                    'selected_tab': 'hospital_record',
+                    'permissions': utilities.get_user_permissions(self.request.user),
+                    'hospital_record' : get_all_hospital_record(self.request.user.id),
+            }
+            else:
+                print("---------------------------")
+                context = {
+                    'selected_tab': 'hospital_record',
+                    'permissions': utilities.get_user_permissions(self.request.user),
+                    'hospital_record' : get_hospital_record_list(self.request.user.id),
+            }
         return context
 
 def get_hospital_record_list(user_id):
     url = 'http://127.0.0.1:8000/api/hospital-record/user/'+str(user_id)
+    r = requests.get(url)
+    hospital_record = r.json()
+    hospital_record_list = hospital_record
+    return hospital_record_list
+
+def get_all_hospital_record(user_id):
+    url = 'http://127.0.0.1:8000/api/hospital-record/'
     r = requests.get(url)
     hospital_record = r.json()
     hospital_record_list = hospital_record

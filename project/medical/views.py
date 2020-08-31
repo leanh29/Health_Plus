@@ -10,19 +10,24 @@ from project import utilities
 
 #CALL API GET LIST
 class GetMedicalList(TemplateView):
+    # paginate_by = settings.QUOTES_PER_PAGE
+    # context_object_name = 'quotes'
     def get_template_names(self):
         return utilities.get_template_names(self.request.user, 'view_medicalmodel', 'list_medical.html')
 
     def get_context_data(self, *args, **kwargs):
+        print(self.request)
+        page = self.request.GET.get('page')
+        print(self.request.GET.get('page'))
         context = {
             'selected_tab': 'medical',
             'permissions': utilities.get_user_permissions(self.request.user),
-            'medical' : get_medical_list(),
+            'medical' : get_medical_list(page),
         }
         return context
 
-def get_medical_list():
-    url = 'http://127.0.0.1:8000/api/medical/'
+def get_medical_list(page):
+    url = 'http://127.0.0.1:8000/api/medical/?page={}'.format(page)
     r = requests.get(url)
     medical = r.json()
     medical_list = medical

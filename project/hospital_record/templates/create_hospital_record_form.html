@@ -20,8 +20,8 @@
         <div class="card-body">
             <form class="forms-sample" action="/hospital-record/create/" method="POST">
                 {% csrf_token %}
-                <!-- {{h_form|crispy}} -->
-                <div id="div_id_hospital" class="form-group row"> 
+                {{h_form|crispy}}
+                <!-- <div id="div_id_hospital" class="form-group row"> 
                     <label for="id_hospital" class=" requiredField col-sm-3 col-form-label">Hospital<span class="asteriskField">*</span> </label>
                     <div class="col-sm-9"> 
                         <input type="text" name="hospital" value="" class="numberinput form-control" required id="id_hospital" placeholder=""> </div>
@@ -54,7 +54,7 @@
                             <option value="{{user.id}}" selected>{{user}}</option> 
                         </select>
                     </div>
-                </div>
+                </div> -->
                 <!-- <input value="{{ user }}" style="display: none;" id="id_user" name="user" required id="id_user"> -->
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>

@@ -50,9 +50,9 @@
             </tr>
           </thead>
           <tbody>
-                {% for hr in hospital_record  %}
+                {% for hr in hospital_record.results  %}
                 <tr>
-                    <td> {{ hr.hospital }} </td>
+                    <td> {{ hr.user }} </td>
                     <td> {{ hr.disease }} </td>
                     <td> {{ hr.start_time }} </td>
                     <td> {{ hr.status }} </td>
