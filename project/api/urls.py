@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from .views import PhysicalList, PhysicalDetail, UserPhysical, FilterPhysical
 from .views import VitalSignsList, VitalSignsDetail, UserVitalSigns
-from .views import HospitalRecordList, HospitalRecordDetail, UserHospitalRecord, FilterHospitalRecord
+from .views import HospitalRecordList, HospitalRecordDetail, UserHospitalRecord, FilterHospitalRecord, HospitalRecordGetAll
 from .views import ReExaminationList, ReExaminationDetail
 from .views import MedicalList, MedicalDetail
 from .views import MedicalDetailGet, MedicalDetailPost, MedicalDetailDetail
@@ -26,7 +26,7 @@ urlpatterns = (
     url(r'vital-signs/(?P<pk>[0-9]+)/$', VitalSignsDetail.as_view(), name='vital_signs_detail'),
     url(r'vital-signs/user/(?P<pk>[0-9]+)/$', UserVitalSigns.as_view(), name='user_vital_signs'),
     
-    url(r'hospital-record/$', HospitalRecordList.as_view(), name='hospital_record'),
+    url(r'hospital-record/$', HospitalRecordGetAll.as_view(), name='hospital_record'),
     url(r'hospital-record/(?P<pk>[0-9]+)/$', HospitalRecordDetail.as_view(), name='hospital_record_detail'),
     url(r'hospital-record/user/(?P<pk>[0-9]+)/$', UserHospitalRecord.as_view(), name="user_hospital_record"),
     url(r'hospital-record/filter/(?P<pk>[0-9]+)/$', FilterHospitalRecord.as_view(), name="hospital_record_filter"),

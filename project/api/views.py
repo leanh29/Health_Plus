@@ -15,7 +15,7 @@ from hospital_record.models import HospitalRecordModel
 from re_examination.models import ReExaminationModel
 from medical.models import MedicalModel, MedicalDetailModel
 from news.models import NewsModel
-from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers, ReExaminationSerializers, MedicalSerializers, MedicalDetailSerializersGet, MedicalDetailSerializersPost, NewsSerializers
+from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers, HospitalRecordSerializers2, ReExaminationSerializers, MedicalSerializers, MedicalDetailSerializersGet, MedicalDetailSerializersPost, NewsSerializers
 
 
 # API FOR PHYSICAL
@@ -109,6 +109,28 @@ class FilterHospitalRecord(generics.ListCreateAPIView):
         disease = self.request.query_params.get('disease', None)
 
         return HospitalRecordModel.objects.filter(user_id=user_id, disease=disease)
+
+
+class HospitalRecordGetAll(generics.ListCreateAPIView):
+    serializer_class = HospitalRecordSerializers2
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def get_queryset(self, re_examination_id=2):
+        #if re_examination_id:
+        sql ="""
+        select hr.id, hospital, disease, start_time, status, user_id, username 
+            from public.hospital_record_hospitalrecordmodel hr 
+                inner join public.auth_user u on hr.user_id = u.id
+        """
+
+        #print("-----------------"+sql)
+        a = HospitalRecordModel.objects.raw(sql)
+
+        #return JsonResponse(list(a), safe = False)
+        return HospitalRecordModel.objects.raw(sql)
+
 
 
 # ----------------------------------------------------API FOR RE EXAMINATION------------------------------

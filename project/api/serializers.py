@@ -50,6 +50,14 @@ class HospitalRecordSerializers(serializers.ModelSerializer):
         # fields = ['id', 'hospital', 'disease', 'start_time','status', 'user']
         fields = '__all__'
 
+class HospitalRecordSerializers2(serializers.ModelSerializer):
+    # hr_re_examination = ReExaminationSerializers(many=True)
+    username = serializers.ReadOnlyField()
+    class Meta:
+        model = HospitalRecordModel
+        # fields = ['id', 'hospital', 'disease', 'start_time','status', 'user']
+        fields = '__all__'
+
 # USER
 class UserSerializers(serializers.ModelSerializer):
     user_physical = PhysicalSerializers(many = True)
