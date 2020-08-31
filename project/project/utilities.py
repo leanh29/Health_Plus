@@ -10,7 +10,10 @@ def get_user_permissions(user):
     return [permission.codename for permission in permissions]
 
 def get_user_group(user):
-    group = user.groups.all()
+    if user.is_superuser:
+        group = Group.objects.all()
+    else:
+        group = user.groups.all()
 
     return group
 

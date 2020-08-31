@@ -19,18 +19,30 @@ class GetMedicalList(TemplateView):
         print(self.request)
         page = self.request.GET.get('page')
         print(self.request.GET.get('page'))
+        medical = get_medical_list(page)
+        current_page = 1
+        list_page=[]
+        if medical['next']:
+            current_page+=1
+            list_page.append(current_page)
+
+        print(list_page)
+
         context = {
             'selected_tab': 'medical',
             'permissions': utilities.get_user_permissions(self.request.user),
             'medical' : get_medical_list(page),
+            'list_page': list_page
         }
         return context
 
 def get_medical_list(page):
+    if page==None: page=1
     url = 'http://127.0.0.1:8000/api/medical/?page={}'.format(page)
     r = requests.get(url)
     medical = r.json()
     medical_list = medical
+    print(medical_list)
     return medical_list
 
 # CALL API POST

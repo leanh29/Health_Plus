@@ -30,7 +30,7 @@ class GetHospitalRecordList(TemplateView):
                     'permissions': utilities.get_user_permissions(self.request.user),
                     'hospital_record' : get_hospital_record_list(self.request.user.id),
             }
-        return context
+            return context
 
 def get_hospital_record_list(user_id):
     url = 'http://127.0.0.1:8000/api/hospital-record/user/'+str(user_id)

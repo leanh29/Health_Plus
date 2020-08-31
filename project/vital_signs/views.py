@@ -14,13 +14,30 @@ class GetVitalSignsList(TemplateView):
     def get_template_names(self):
         return utilities.get_template_names(self.request.user, 'view_vitalsignsmodel', 'list_vital_signs.html')
 
+    
+
     def get_context_data(self, *args, **kwargs):
-        context = {
-            'selected_tab': 'vital_signs',
-            'permissions': utilities.get_user_permissions(self.request.user),
-            'vital_signs' : get_vital_signs_list(self.request.user.id),
-        }
-        return context
+        group = utilities.get_user_group(self.request.user)
+        for gr in group:
+            if str(gr)=='Doctor':
+                context = {
+                    'selected_tab': 'vital_signs',
+                    'permissions': utilities.get_user_permissions(self.request.user),
+                    'vital_signs' : get_all_vital_signs(),
+            }
+            else:
+                context = {
+                    'selected_tab': 'vital_signs',
+                    'permissions': utilities.get_user_permissions(self.request.user),
+                    'vital_signs' : get_vital_signs_list(self.request.user.id),
+            }
+            return context
+        # context = {
+        #     'selected_tab': 'vital_signs',
+        #     'permissions': utilities.get_user_permissions(self.request.user),
+        #     'vital_signs' : get_vital_signs_list(self.request.user.id),
+        # }
+            # return context
 
 def get_vital_signs_list(user_id):
     url = 'http://127.0.0.1:8000/api/vital-signs/user/'+str(user_id)
@@ -30,11 +47,17 @@ def get_vital_signs_list(user_id):
 
     for vital_signs in vital_signs_list['results']:
         vital_signs['time'] = dateutil.parser.parse(vital_signs['time']).strftime("%Y-%m-%d %H:%M")
-        #print(vital_signs)
-    
-    print("---------------------")
 
-    #print(vital_signs_list['results'])
+    return vital_signs_list
+
+def get_all_vital_signs():
+    url = 'http://127.0.0.1:8000/api/vital-signs/'
+    r = requests.get(url)
+    vital_signs = r.json()
+    vital_signs_list = vital_signs
+
+    for vital_signs in vital_signs_list['results']:
+        vital_signs['time'] = dateutil.parser.parse(vital_signs['time']).strftime("%Y-%m-%d %H:%M")
 
     return vital_signs_list
 
