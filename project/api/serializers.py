@@ -13,27 +13,12 @@ class PhysicalSerializers(serializers.ModelSerializer):
         model = PhysicalModel
         fields = ['id','height','weight','date','user']
 
-# class FilterPhysicalSerializers(serializers.ModelSerializer):
-#     class Meta:
-#         model = PhysicalModel
-#         fields = ['id','height','weight','date','user']
-
-#     def get_data(self, obj):
-#         names = self.context['request'].query_params.get('height', None)
-#         data = PhysicalModel.objects.filter(height=names.split(','))
-#         data_serializer = MyDataSerializer(data, many=True)
-#         return data_serializer.data
-
-#         queryset = PhysicalModel.objects.all()
-#         height = self.request.query_params.get('height', None)
-#         if height is not None:
-#             queryset = queryset.filter(height=height)
-
 # VITAL SIGNS
 class VitalSignsSerializers(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField()
     class Meta:
         model = VitalSignsModel
-        fields = ['id','temperature','bool_pressure','heartbeat','breathing','time','user']
+        fields = '__all__'
 
 
 # RE EXAMINATION

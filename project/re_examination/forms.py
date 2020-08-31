@@ -4,7 +4,7 @@ from .models import ReExaminationModel
 class PostReExamination(forms.ModelForm):
     class Meta:
         model = ReExaminationModel
-        fields = ['doctor','result','date','appointment_date']
+        fields = ['result','date']
 
 
 class PutReExamination(forms.ModelForm):

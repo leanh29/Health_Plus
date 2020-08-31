@@ -15,7 +15,7 @@ class PutMedical(forms.ModelForm):
 class PostMedicalDetail(forms.ModelForm):
     class Meta:
         model = MedicalDetailModel
-        fields = ['medical','quantity','time']
+        fields = ['medical','quantity','time','dates']
 
 class PutMedicalDetail(forms.ModelForm):
     class Meta:

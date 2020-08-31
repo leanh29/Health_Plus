@@ -21,6 +21,7 @@ class MedicalDetailModel(models.Model):
     medical = models.ForeignKey(MedicalModel, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=True)
     time = models.IntegerField(null=True)
+    dates = models.IntegerField(null=True)
 
     def __str__(self):
         return f'{self.re_examination.appointment_date} - {self.medical.name}'

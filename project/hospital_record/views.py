@@ -52,16 +52,40 @@ class FilterHospitalRecordList(TemplateView):
         return utilities.get_template_names(self.request.user, 'view_hospitalrecordmodel', 'list_hospital_record.html')
 
     def get_context_data(self, *args, **kwargs):
-        print("--------------")
-        context = {
-            'selected_tab': 'hospital_record',
-            'permissions': utilities.get_user_permissions(self.request.user),
-            'hospital_record' : filter_hospital_record_list(self.request.user.id, self.request),
-        }
-        print(str(self.request)+"=======================")
-        return context
+        group = utilities.get_user_group(self.request.user)
+        for gr in group:
+            if str(gr)=='Doctor':
+                context = {
+                    'selected_tab': 'hospital_record',
+                    'permissions': utilities.get_user_permissions(self.request.user),
+                    'hospital_record' : filter_all_hospital_record(self.request),
+            }
+            else:
+                context = {
+                    'selected_tab': 'hospital_record',
+                    'permissions': utilities.get_user_permissions(self.request.user),
+                    'hospital_record' : filter_user_hospital_record(self.request.user.id, self.request),
+            }
+            return context
+        # print("--------------")
+        # context = {
+        #     'selected_tab': 'hospital_record',
+        #     'permissions': utilities.get_user_permissions(self.request.user),
+        #     'hospital_record' : filter_hospital_record_list(self.request.user.id, self.request),
+        # }
+        # print(str(self.request)+"=======================")
+        # return context
 
-def filter_hospital_record_list(user_id, request):
+def filter_all_hospital_record(request):
+    disease=request.GET.get('disease')
+    print(str(disease)+"--------------")
+    url = 'http://127.0.0.1:8000/api/hospital-record/filter?disease={}'.format(disease)
+    r = requests.get(url)
+    hospital_record = r.json()
+    hospital_record_list = hospital_record
+    return hospital_record_list
+
+def filter_user_hospital_record(user_id, request):
     disease=request.GET.get('disease')
     print(str(disease)+"--------------")
     url = 'http://127.0.0.1:8000/api/hospital-record/filter/{}?disease={}'.format(user_id, disease)

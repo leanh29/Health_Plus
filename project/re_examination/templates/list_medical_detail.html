@@ -30,6 +30,7 @@
               <th> Meidcical </th>
               <th> Quantity </th>
               <th> Times </th>
+              <th> Dates </th>
               <th> Update </th>
               <th> Delete </th>
               <!-- <th> Appointment date </th> -->
@@ -41,6 +42,7 @@
                     <td> {{ md.name }} </td>
                     <td> {{ md.quantity }} </td>
                     <td> {{ md.time }} </td>
+                    <td> {{ md.dates }} </td>
 
                     <td class="{% if not 'change_medicaldetailmodel' in permissions %} d-none {% endif %}">
                       <a class="btn btn-inverse-warning btn-fw" href="{% url 'medical_detail_detail' hospital_record_id=hospital_record_id id=re_examination_id medical_detail_id=md.medical_detail_id %}" >Update</a>

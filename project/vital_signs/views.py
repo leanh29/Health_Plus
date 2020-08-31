@@ -14,8 +14,6 @@ class GetVitalSignsList(TemplateView):
     def get_template_names(self):
         return utilities.get_template_names(self.request.user, 'view_vitalsignsmodel', 'list_vital_signs.html')
 
-    
-
     def get_context_data(self, *args, **kwargs):
         group = utilities.get_user_group(self.request.user)
         for gr in group:

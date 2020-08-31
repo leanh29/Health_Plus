@@ -16,23 +16,13 @@ class GetMedicalList(TemplateView):
         return utilities.get_template_names(self.request.user, 'view_medicalmodel', 'list_medical.html')
 
     def get_context_data(self, *args, **kwargs):
-        print(self.request)
+        page=1
         page = self.request.GET.get('page')
-        print(self.request.GET.get('page'))
-        medical = get_medical_list(page)
-        current_page = 1
-        list_page=[]
-        if medical['next']:
-            current_page+=1
-            list_page.append(current_page)
-
-        print(list_page)
 
         context = {
             'selected_tab': 'medical',
             'permissions': utilities.get_user_permissions(self.request.user),
             'medical' : get_medical_list(page),
-            'list_page': list_page
         }
         return context
 
@@ -43,6 +33,30 @@ def get_medical_list(page):
     medical = r.json()
     medical_list = medical
     print(medical_list)
+    return medical_list
+
+class FilterMedicalList(TemplateView):
+    # paginate_by = settings.QUOTES_PER_PAGE
+    # context_object_name = 'quotes'
+    def get_template_names(self):
+        return utilities.get_template_names(self.request.user, 'view_medicalmodel', 'list_medical.html')
+
+    def get_context_data(self, *args, **kwargs):
+
+        context = {
+            'selected_tab': 'medical',
+            'permissions': utilities.get_user_permissions(self.request.user),
+            'medical' : filter_all_medical(self.request),
+        }
+        return context
+
+def filter_all_medical(request):
+    name=request.GET.get('name')
+    print(str(name)+"--------------")
+    url = 'http://127.0.0.1:8000/api/medical/filter?name={}'.format(name)
+    r = requests.get(url)
+    medical = r.json()
+    medical_list = medical
     return medical_list
 
 # CALL API POST

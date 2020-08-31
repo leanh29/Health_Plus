@@ -75,6 +75,25 @@ class UserVitalSigns(generics.ListCreateAPIView):
 
         return VitalSignsModel.objects.filter(user_id=user_id)
 
+class VitalSignsGetAll(generics.ListCreateAPIView):
+    serializer_class = VitalSignsSerializers
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def get_queryset(self, re_examination_id=2):
+        #if re_examination_id:
+        sql ="""
+        select vt.id, time, temperature, bool_pressure, heartbeat, breathing, user_id, username 
+            from public.vital_signs_vitalsignsmodel vt
+                inner join public.auth_user u on vt.user_id = u.id
+        """
+
+        #print("-----------------"+sql)
+        a = VitalSignsModel.objects.raw(sql)
+
+        #return JsonResponse(list(a), safe = False)
+        return VitalSignsModel.objects.raw(sql)
 
 # ---------------------------------------------------API FOR HOSPITAL RECORD------------------------------
 class HospitalRecordList(generics.ListCreateAPIView):
@@ -101,7 +120,7 @@ class UserHospitalRecord(generics.ListCreateAPIView):
 
         return HospitalRecordModel.objects.filter(user_id=user_id)
 
-class FilterHospitalRecord(generics.ListCreateAPIView):
+class FilterUserHospitalRecord(generics.ListCreateAPIView):
     serializer_class = HospitalRecordSerializers
 
     def get_queryset(self):
@@ -109,6 +128,14 @@ class FilterHospitalRecord(generics.ListCreateAPIView):
         disease = self.request.query_params.get('disease', None)
 
         return HospitalRecordModel.objects.filter(user_id=user_id, disease=disease)
+
+class FilterAllHospitalRecord(generics.ListCreateAPIView):
+    serializer_class = HospitalRecordSerializers
+
+    def get_queryset(self):
+        disease = self.request.query_params.get('disease', None)
+
+        return HospitalRecordModel.objects.filter(disease=disease)
 
 
 class HospitalRecordGetAll(generics.ListCreateAPIView):
@@ -130,8 +157,6 @@ class HospitalRecordGetAll(generics.ListCreateAPIView):
 
         #return JsonResponse(list(a), safe = False)
         return HospitalRecordModel.objects.raw(sql)
-
-
 
 # ----------------------------------------------------API FOR RE EXAMINATION------------------------------
 class ReExaminationList(generics.ListCreateAPIView):
@@ -167,6 +192,14 @@ class MedicalDetail(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         instance = serializer.save()
 
+class FilterAllMedical(generics.ListCreateAPIView):
+    serializer_class = MedicalSerializers
+
+    def get_queryset(self):
+        name = self.request.query_params.get('name', None)
+
+        return MedicalModel.objects.filter(name=name)
+
 class MedicalDetailGet(generics.ListCreateAPIView):
     serializer_class = MedicalDetailSerializersGet
 
@@ -185,6 +218,7 @@ class MedicalDetailGet(generics.ListCreateAPIView):
             md.id as medical_detail_id,
             md.quantity,
             md.time,
+            md.dates,
             re_examination_id,
             md.medical_id
         FROM
@@ -196,6 +230,7 @@ class MedicalDetailGet(generics.ListCreateAPIView):
                     medical_id,
                     quantity,
                     time,
+                    dates,
                     re_examination_id
                 FROM
                     medical_medicaldetailmodel

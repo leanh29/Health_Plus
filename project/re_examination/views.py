@@ -38,10 +38,12 @@ def save_re_examination(request, hospital_record_id):
     if request.method == "POST" and utilities.is_permission_granted(request.user, 'add_reexaminationmodel'):
         r_form = PostReExamination(request.POST)
         if r_form.is_valid():
-            doctor = r_form.cleaned_data['doctor']
+            #doctor = r_form.cleaned_data['doctor']
+            doctor = request.user.username
             result = r_form.cleaned_data['result']
             date = r_form.cleaned_data['date']
-            appointment_date = r_form.cleaned_data['appointment_date']
+            #appointment_date = r_form.cleaned_data['appointment_date']
+            appointment_date=request.GET.get('appointment_date')
             r = requests.post('http://127.0.0.1:8000/api/re-examination/hospital_record/{}/'.format(hospital_record_id), data = {'doctor':doctor,
                                                                                     'result':result,
                                                                                     'date':date,
@@ -130,26 +132,6 @@ def delete_re_examination(request, hospital_record_id, id):
 # -------------------------------------------------------------------------------------------------
 # --------------------------------------- MEDICAL DETAIL ------------------------------------------
 
-# CALL API GET MEDICAL LIST OF RE-EXAMINATION
-# def get_medical_detail_list(re_examination_id=None):
-#     #if re_examination_id:
-#     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/{}/'.format(re_examination_id)
-#     # else:
-#     #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
-
-#     return requests.get(url).json()
-
-# CALL API GET MEDICAL DETAIL LIST 
-# def get_medical_detail_list(re_examination_id=None):
-#     # if re_examination_id:
-#     #     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/{}/'.format(re_examination_id)
-#     # else:
-#     url = 'http://127.0.0.1:8000/api/medical-detail/re-examination/'
-
-#     return requests.get(url).json()
-
-
-
 #CALL API GET MEDICAL DETAIL (PRESCRIPTION)
 class GetMedicalDetail(TemplateView):
     def get_template_names(self):
@@ -182,9 +164,11 @@ def save_medical_detail(request, hospital_record_id, id):
             medical = md_form.cleaned_data['medical']
             quantity = md_form.cleaned_data['quantity']
             time = md_form.cleaned_data['time']
+            dates = md_form.cleaned_data['dates']
             r = requests.post('http://127.0.0.1:8000/api/medical-detail/post/{}/'.format(id), data = {'medical':medical.id,
                                                                                     'quantity':quantity,
                                                                                     'time':time,
+                                                                                    'dates':dates,
                                                                                     're_examination':id})
             if r.status_code == 200 or 201:
                 data = r.json()
