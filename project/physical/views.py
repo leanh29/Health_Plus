@@ -1,14 +1,13 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, HttpResponse
-from django.conf import settings
 from django.contrib import messages
 import requests
 from .forms import PostPhysical, PutPhysical
-from .serializer import PhysicalSerializer
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView
 from project import utilities
 
-#CALL API GET LIST
+
+# CALL API GET LIST
 class GetPhysicalList(TemplateView):
     def get_template_names(self):
         return utilities.get_template_names(self.request.user, 'view_physicalmodel', 'list_physical.html')
@@ -21,6 +20,7 @@ class GetPhysicalList(TemplateView):
         }
         return context
 
+
 def get_physical_list(user_id):
     url = 'http://127.0.0.1:8000/api/physical/user/'+str(user_id)
     r = requests.get(url)
@@ -29,7 +29,8 @@ def get_physical_list(user_id):
     print(physical_list)
     return physical_list
 
-#CALL API FILLTER PHYSICAL
+
+# CALL API FILLTER PHYSICAL
 class FilterPhysicalList(TemplateView):
     def get_template_names(self):
         return utilities.get_template_names(self.request.user, 'view_physicalmodel', 'list_physical.html')
@@ -41,6 +42,7 @@ class FilterPhysicalList(TemplateView):
             'physical' : filter_physical_list(self.request.user.id, self.request),
         }
         return context
+
 
 def filter_physical_list(user_id, request):
     height=request.GET.get('height')
@@ -69,13 +71,13 @@ def save_physical(request):
                 msg = r.json()
                 return HttpResponse(msg)
         else:
-        # Added else statment
+            # Added else statement
             msg = 'Errors: %s' % form.errors.as_text()
             return HttpResponse(msg, status=400)
     else:
         form = PostPhysical()
 
-    context =  {
+    context = {
         'selected_tab': 'physical',
         'permissions': utilities.get_user_permissions(request.user),
         'form': form
@@ -83,7 +85,8 @@ def save_physical(request):
 
     return render(request, utilities.get_template_name(request.user, 'add_physicalmodel', 'create_form.html'), context)
 
-#CALL API GET DETAIL
+
+# CALL API GET DETAIL
 class GetPhysicalDetail(TemplateView):
     def get_template_names(self):
         return utilities.get_template_names(self.request.user, 'change_physicalmodel', 'detail_physical.html')
@@ -95,6 +98,7 @@ class GetPhysicalDetail(TemplateView):
             'physical': get_physical_detail(id)
         }
         return context
+
 
 def get_physical_detail(id):
     url = 'http://127.0.0.1:8000/api/physical/'+str(id)

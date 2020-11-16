@@ -1,5 +1,4 @@
 from django.urls import path
-from . import views
 from .views import save_physical, GetPhysicalList, FilterPhysicalList, GetPhysicalDetail, update_physical, delete_physical
 
 urlpatterns = [

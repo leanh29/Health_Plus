@@ -1,6 +1,7 @@
 from django import forms
 from .models import PhysicalModel
 
+
 class PostPhysical(forms.ModelForm):
     #user = forms.CharField()
 
