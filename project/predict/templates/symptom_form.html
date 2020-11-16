@@ -1,0 +1,29 @@
+{% extends "base_project.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block page-header %}
+<div class="page-header">
+    <h3 class="page-title"> <span class="page-title-icon bg-gradient-primary text-white mr-2">
+      <i class="mdi mdi-google-physical-web"></i>
+    </span> Physical </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active"><a href="{% url 'physical_list' %}">Physical</a></li>
+            <li class="breadcrumb-item " aria-current="page">New Physical</li>
+        </ol>
+    </nav>
+</div>
+{% endblock page-header %}
+{% block content %}
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
