@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     're_examination.apps.ReExaminationConfig',
     'medical.apps.MedicalConfig',
     'news.apps.NewsConfig',
+    'predict.apps.PredictConfig',
     'crispy_forms',
     'widget_tweaks',
     'django.contrib.admin',

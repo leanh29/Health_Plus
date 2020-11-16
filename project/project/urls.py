@@ -27,6 +27,7 @@ from hospital_record import urls as urls_hospital_record
 from medical import urls as urls_medical
 from re_examination import urls as urls_re_examination
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include(urls_user)),
