@@ -1,4 +1,4 @@
-{% extends "base_project.html" %}
+{% extends "base_predict.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
 {% block page-header %}
@@ -14,16 +14,60 @@
     </nav>
 </div>
 {% endblock page-header %}
+
 {% block content %}
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+            <div id="contact_form">
+            <form action="" method="POST">
+                {% csrf_token %}
+<!--                {{ form }}-->
+                <div class="form-group row">
+                    <label for="id_symptom" class=" requiredField col-sm-3 col-form-label">Symptom<span class="asteriskField">*</span> </label>
+                    <div class="col-sm-9">
+                        <input type="text" name="symptom" value="" class="numberinput form-control" required id="id_symptom" placeholder="symptom"> </div>
+                </div>
+                <button type="submit" class="btn btn-inverse-primary btn-fw" style="margin-bottom: 40px; margin-left: 525px">Save</button>
+<!--                <input type="submit" value="Save" class="text">-->
+<!--                      <i class="save-icon fa fa-fw fa-save"></i>-->
+<!--                      <i class="saving-indicator fa fa-fw fa-circle-o-notch fa-spin"></i>-->
+<!--                      <i class="save-complete-indicator fa fa-thumbs-o-up"></i>-->
+<!--                      <span class="text">Save</span>-->
+<!--                </in>-->
+
+                <!-- Button trigger modal -->
+<!--                <input type="submit" value="Modal" class="btn btn-primary btn-lg" id="submit_id">-->
+
+                <!-- Modal -->
+<!--                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+<!--                  <div class="modal-dialog" role="document">-->
+<!--                    <div class="modal-content">-->
+<!--                      <div class="modal-header">-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+<!--                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>-->
+<!--                      </div>-->
+<!--                      <div class="modal-body">-->
+<!--                        ...-->
+<!--                      </div>-->
+<!--                      <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <div class="col-md-4 stretch-card grid-margin" style="margin-left: 400px; width: 1000px">
+                <div class="card bg-gradient-danger card-img-holder text-white" >
+                  <div class="card-body">
+                    <h2 class="mb-5">{{ result }}</h2>
+                  </div>
+                </div>
+              </div>
+            </form>
+
         </div>
     </div>
 </div>
+  </div>
 {% endblock content %}

@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls import include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 from api import urls as urls_api
 from user import urls as urls_user
@@ -28,7 +29,13 @@ from medical import urls as urls_medical
 from re_examination import urls as urls_re_examination
 from predict import urls as urls_predict
 
+from user.views import Home, index
+
 urlpatterns = [
+
+    path('home/', login_required(Home.as_view()), name='home'),
+    path('toppage/', index, name='index'),
+
     path('admin/', admin.site.urls),
     path('home/', include(urls_user)),
     path('api/', include(urls_api)),
@@ -37,7 +44,8 @@ urlpatterns = [
     path('hospital-record/', include(urls_hospital_record)),
     path('medical/', include(urls_medical)),
     path('re-examination/', include(urls_re_examination)),
-    path('predict/', include(urls_predict))
+    path('predict/', include(urls_predict)),
+
 ]
 
 if settings.DEBUG:

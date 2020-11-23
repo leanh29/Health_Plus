@@ -4,6 +4,7 @@ import requests
 from .forms import PostSymptom
 from project import utilities
 from m_Summarize import get_predict
+from django.template.loader import render_to_string
 
 
 # CALL API POST
@@ -15,19 +16,28 @@ def save_symptom(request):
         # check whether it's valid:
         if form.is_valid():
             symptom = form.cleaned_data['symptom']
-            get_predict(symptom)
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            # Added else statement
+            result = get_predict(symptom)
+            print('11111111111111111111111', result)
             # msg = 'Errors: %s' % form.errors.as_text()
-            return HttpResponse('msg', status=400)
-
+            # return HttpResponse(result, status=200)
+            # return HttpResponse(result)
+            rendered = render_to_string('symptom_form.html', {'result': result})
+            return HttpResponse(rendered)
+        else:
+            msg = 'Errors: %s' % form.errors.as_text()
+            print('===========================')
+            return HttpResponse(msg, status=400)
         # if a GET (or any other method) we'll create a blank form
     else:
         form = PostSymptom()
+        result = '...'
 
-    return render(request, 'symptom_form.html', {'form': form})
+    context = {
+        'result': result,
+        'form': form
+    }
+
+    return render(request, 'symptom_form.html', context)
 
 
 

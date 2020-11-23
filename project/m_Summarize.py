@@ -209,3 +209,4 @@ def get_predict(text):
     print("%s sentiment; %f%% confidence" % (labels[np.argmax(pred)], pred[0][np.argmax(pred)] * 100))
     del evalSentence
     sentence = []
+    return labels[np.argmax(pred)]

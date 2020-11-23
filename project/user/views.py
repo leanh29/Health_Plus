@@ -9,10 +9,16 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 import requests
 
-@login_required 
-def home(request):
-    context = {'permissions': utilities.get_user_permissions(request.user)}
-    return render(request,'home.html', context) 
+
+# @login_required
+# def home(request):
+#     context = {'permissions': utilities.get_user_permissions(request.user)}
+#     return render(request, 'home.html', context)
+
+
+def index(request):
+    return render(request, 'index.html')
+
 
 def register(request):
     if request.method == 'POST': 
@@ -46,8 +52,8 @@ def profile(request):
     }
     return render(request,'profile.html', context)
 
-#CHART DATA
 
+# CHART DATA
 class Home(TemplateView):
     template_name = 'home.html'
 
