@@ -30,18 +30,18 @@
         <table class="table table-striped ">
           <thead>
             <tr>
-              <th> Patient </th>
+              <!-- <th> Patient </th> -->
               <th> Time </th>
-              <th> Temperature (°C) </th>
-              <th> Bool Pressure (mmHg) </th>
-              <th> Heartbeat (bpm) </th>
-              <th> Breathing (per minute)</th>
+              <th> Temperature <br> (°C) </th>
+              <th> Bool Pressure <br> (mmHg) </th>
+              <th> Heartbeat <br> (bpm) </th>
+              <th> Breathing <br> (per minute)</th>
             </tr>
           </thead>
           <tbody>
                 {% for vs in vital_signs.results  %}
                 <tr>
-                    <td> {{ vs.username }} </td>
+                    <!-- <td> {{ vs.username }} </td> -->
                     <td> {{ vs.time }} </td>
                     <td> {{ vs.temperature }} </td>
                     <td> {{ vs.bool_pressure }} </td>

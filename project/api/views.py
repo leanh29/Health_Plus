@@ -14,8 +14,7 @@ from vital_signs.models import VitalSignsModel
 from hospital_record.models import HospitalRecordModel
 from re_examination.models import ReExaminationModel
 from medical.models import MedicalModel, MedicalDetailModel
-from news.models import NewsModel
-from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers, HospitalRecordSerializers2, ReExaminationSerializers, MedicalSerializers, MedicalDetailSerializersGet, MedicalDetailSerializersPost, NewsSerializers
+from .serializers import PhysicalSerializers, VitalSignsSerializers, HospitalRecordSerializers, HospitalRecordSerializers2, ReExaminationSerializers, MedicalSerializers, MedicalDetailSerializersGet, MedicalDetailSerializersPost
 
 
 # API FOR PHYSICAL
@@ -270,11 +269,3 @@ class MedicalDetailDetail(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         instance = serializer.save()
 
-# API FOR PHYSICAL
-class NewsList(generics.ListCreateAPIView):
-    serializer_class = NewsSerializers
-
-    def get_queryset(self):
-        date_filter = datetime.date.today()
-
-        return NewsModel.objects.filter(date=date_filter)

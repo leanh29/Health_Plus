@@ -8,7 +8,8 @@ from project import utilities
 from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 import requests
-
+from bs4 import BeautifulSoup
+import datetime
 
 # @login_required
 # def home(request):
@@ -16,9 +17,32 @@ import requests
 #     return render(request, 'home.html', context)
 
 
-def index(request):
-    return render(request, 'index.html')
+# def index(request):
+    # return render(request, 'index.html')
 
+
+def crawNewsData(url):
+    response = requests.get(url, verify=False)
+    soup = BeautifulSoup(response.content, "html.parser")
+    crawed = soup.findAll('span', class_='font24')
+    data = {}
+    i = 1
+    for item in crawed:
+        data.update({'date':datetime.date.today})
+        if i==1:
+            data.update({'case_vn': item.text})
+        if i==3:
+            data.update({'recoverd_vn': item.text})
+        if i==4:
+            data.update({'death_vn':item.text})
+        if i==5:
+            data.update({'case_w':item.text})
+        if i==7:
+            data.update({'recoverd_w':item.text})
+        if i==8:
+            data.update({'death_w':item.text})
+        i+=1
+    return data
 
 def register(request):
     if request.method == 'POST': 
@@ -61,7 +85,8 @@ class Home(TemplateView):
         context = {
             'permissions': utilities.get_user_permissions(self.request.user),
             'physical' : get_physical_list(self.request.user.id),
-            'news': get_news()
+            'news': crawNewsData('https://ncov.moh.gov.vn/en/web/guest/trang-chu'),
+            'selected_tab': 'dashboard',
         }
         return context
 
@@ -71,10 +96,3 @@ def get_physical_list(user_id):
     physical = r.json()
     physical_list = physical
     return physical_list
-
-def get_news():
-    url = 'http://127.0.0.1:8000/api/news/'
-    r = requests.get(url)
-    news = r.json()
-    print(news)
-    return news

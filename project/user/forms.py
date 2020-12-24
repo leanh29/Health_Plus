@@ -10,6 +10,16 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2' ]
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        try:
+            match = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return email
+
+        raise forms.ValidationError('This email address is already in use.')
+
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 

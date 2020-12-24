@@ -544,12 +544,20 @@
       var gradientLegendGreen = 'linear-gradient(to right, rgba(6, 185, 157, 1), rgba(132, 217, 210, 1))';
 
       var data_w = []
-      var case_w = document.getElementById('case_w').innerHTML;
-      data_w.push(case_w)
-      var death = document.getElementById('death_w').innerHTML;
-      data_w.push(death)
-      var recoverd = document.getElementById('recoverd_w').innerHTML;
-      data_w.push(recoverd)
+      var case_w = parseInt(document.getElementById('case_w').innerHTML); 
+      console.log(typeof(case_w))
+      var death_w = parseInt(document.getElementById('death_w').innerHTML);
+      var recoverd_w = parseInt(document.getElementById('recoverd_w').innerHTML);
+
+      var sum = case_w + death_w + recoverd_w
+
+      var case_per = case_w/sum*100
+      var death_per = death_w/sum*100
+      var recover_per = recoverd_w/sum*100
+
+      data_w.push(case_per)
+      data_w.push(death_per)
+      data_w.push(recover_per)
 
       console.log(data_w)
 

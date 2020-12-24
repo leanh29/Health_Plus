@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'hospital_record.apps.HospitalRecordConfig',
     're_examination.apps.ReExaminationConfig',
     'medical.apps.MedicalConfig',
-    'news.apps.NewsConfig',
     'predict.apps.PredictConfig',
     'crispy_forms',
     'widget_tweaks',
@@ -139,6 +138,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT =os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = BASE_DIR + '/static/'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL='login'

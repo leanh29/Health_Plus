@@ -15,7 +15,7 @@ class HospitalRecordModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_hospital_record")
 
     class Meta:
-        ordering = ['start_time']
+        ordering = ['-start_time']
 
     def __str__(self):
         return f'{self.user.username}  hospital record {self.disease}' 

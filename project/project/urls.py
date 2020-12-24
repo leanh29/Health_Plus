@@ -27,26 +27,35 @@ from vital_signs import urls as urls_vital_signs
 from hospital_record import urls as urls_hospital_record
 from medical import urls as urls_medical
 from re_examination import urls as urls_re_examination
-from predict import urls as urls_predict
+# from predict import urls as urls_predict
+from django.contrib.auth import views as auth_views
 
-from user.views import Home, index
+from user.views import Home, register, profile
+from predict.views import save_symptom
 
 urlpatterns = [
-
+    path('toppage/', save_symptom, name='index'),
     path('home/', login_required(Home.as_view()), name='home'),
-    path('toppage/', index, name='index'),
+    path('register/', register, name='register'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
+    path('profile/', profile, name='profile'),
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
+    path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
 
     path('admin/', admin.site.urls),
-    path('home/', include(urls_user)),
+    # path('home/', include(urls_user)),
     path('api/', include(urls_api)),
     path('physical/', include(urls_physical)),
     path('vital-signs/', include(urls_vital_signs)),
     path('hospital-record/', include(urls_hospital_record)),
     path('medical/', include(urls_medical)),
     path('re-examination/', include(urls_re_examination)),
-    path('predict/', include(urls_predict)),
 
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+

@@ -16,7 +16,7 @@ class SendMailAdmin(admin.ModelAdmin):
         from django.core.mail import send_mail
         for i in queryset:
             if i.user.email:
-                send_mail('New Account for doctor', 'Your account has been created with password "Doctorpurple". Login here http://127.0.0.1:8000/home/login/ and change your password to continue!', 'leanh.ltha@gmail.com',[i.user.email], fail_silently=False)
+                send_mail('New Account for doctor', 'Your account has been created with password "Doctorpurple". Login here http://127.0.0.1:8000/login/ and change your password to continue!', 'leanh.ltha@gmail.com',[i.user.email], fail_silently=False)
             else:
                 self.message_user(request, "Mail sent successfully ") 
     send_EMAIL.short_description = "Send an email to selected users"

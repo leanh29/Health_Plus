@@ -21,8 +21,8 @@
         <div class="card-body">
             <form class="forms-sample" action="/vital-signs/create/" method="POST">
                 {% csrf_token %}
-                {{v_form|crispy}}
-                <!-- <div id="div_id_temperature" class="form-group row"> 
+                <!-- {{v_form|crispy}} -->
+                <div id="div_id_temperature" class="form-group row"> 
                     <label for="id_temperature" class=" requiredField col-sm-3 col-form-label">Temperature<span class="asteriskField">*</span> </label>
                     <div class="col-sm-9"> 
                         <input type="number" name="temperature" min="0" max="50" value="" step="any" class="numberinput form-control" required id="id_temperature" placeholder="°C"> </div>
@@ -49,7 +49,7 @@
                             <option value="{{user.id}}" selected>{{user}}</option> 
                         </select>
                     </div>
-                </div> -->
+                </div>
                 <!-- <input value="{{ user }}" style="display: none;" id="id_user" name="user" required id="id_user"> -->
                 <div class="row" style="justify-content: center">
                     <button type="submit" class="btn btn-inverse-success btn-fw col-md-4" style="margin: 0px 20px;">Save</button>
